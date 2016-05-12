@@ -30,7 +30,7 @@ public class Main {
     printMenu();
 
 //    ToDo myTask = new ToDo("Save the World!");
-    System.out.printf("%3s\t%-15s\t%s%n", "NUM", "TASK", "DONE");
+    System.out.printf("%3s\t%-15s\t%s\t%10s%n", "NUM", "TASK", "DONE", "DATE");
 //    System.out.println(myTask);
 //    myTask.markDone();
 //    System.out.println(myTask);

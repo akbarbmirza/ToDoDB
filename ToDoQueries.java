@@ -46,7 +46,7 @@ public class ToDoQueries {
 //    }
 
       // CREATE TABLE
-      sql = "CREATE TABLE TODO(ID INT, Task VARCHAR(255), Done BOOLEAN NOT NULL);";
+      sql = "CREATE TABLE TODO(ID INT, Task VARCHAR(255), Done BOOLEAN NOT NULL, Date DATE );";
 //      try {
       s = connection.createStatement();
 //        ResultSet rs = s.executeQuery(sql);
@@ -64,7 +64,7 @@ public class ToDoQueries {
       selectTaskByID = connection.prepareStatement(sql);
 
       // create insert that adds a new task into the database
-      sql = "INSERT INTO TODO (ID, Task, Done) VALUES (?, ?, ?)";
+      sql = "INSERT INTO TODO (ID, Task, Done, Date) VALUES (?, ?, ?, ?)";
       insertNewTask = connection.prepareStatement(sql);
 
     } catch (SQLException e) {
@@ -129,6 +129,7 @@ public class ToDoQueries {
       insertNewTask.setInt(1, newTask.getID());
       insertNewTask.setString(2, newTask.getTask());
       insertNewTask.setBoolean(3, newTask.isTaskDone());
+      insertNewTask.setDate(4, newTask.getDateAdded());
 
       // insert the new entry; returns @ of rows updated
       result = insertNewTask.executeUpdate();
