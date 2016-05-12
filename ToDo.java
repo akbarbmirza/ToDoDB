@@ -1,3 +1,4 @@
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ToDo {
@@ -9,7 +10,7 @@ public class ToDo {
   private int ID;
   private String taskDesc;
   private boolean isDone;
-  private Date dueDate;
+  private java.sql.Date dateAdded;
   private String category;
 
   //===========================================================================
@@ -21,6 +22,7 @@ public class ToDo {
     this.ID = ++taskCount;
     this.taskDesc = desc;
     this.isDone = false;
+    this.dateAdded = new java.sql.Date(new java.util.Date().getTime());
   }
 
   //===========================================================================
@@ -41,6 +43,10 @@ public class ToDo {
     return this.isDone;
   }
 
+  public java.sql.Date getDateAdded() {
+    return this.dateAdded;
+  }
+
   //---------------------------------------------------------------------------
   // SETTERS
   //---------------------------------------------------------------------------
@@ -57,6 +63,10 @@ public class ToDo {
     this.isDone = false;
   }
 
+//  public void setDateAdded(int year, int month, int date) {
+//    this.dateAdded = new Date();
+//  }
+
   //---------------------------------------------------------------------------
   // OTHER METHODS
   //---------------------------------------------------------------------------
@@ -70,7 +80,7 @@ public class ToDo {
 
   @Override
   public String toString() {
-    return String.format("%3d\t%-15s\t%s", this.getID(), this.getTask(), this.doneEmoji());
+    return String.format("%3s\t%-15s\t%s\t%10s", this.getID(), this.getTask(), this.doneEmoji(), this.getDateAdded());
   }
 
 }
