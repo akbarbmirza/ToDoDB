@@ -30,7 +30,7 @@ public class Main {
     printMenu();
 
 //    ToDo myTask = new ToDo("Save the World!");
-    System.out.printf("%3s\t%-15s\t%s%n", "NUM", "TASK", "DONE");
+    System.out.printf("%3s\t%-15s\t%-15s\t%s\t%10s%n", "NUM", "TASK", "CATEGORY", "DONE", "DATE");
 //    System.out.println(myTask);
 //    myTask.markDone();
 //    System.out.println(myTask);
@@ -80,7 +80,7 @@ public class Main {
     // s = connection.createStatement();
     // ResultSet rs = s.executeQuery(sql);
 
-    tdq.addTask("Get DB Running");
+    tdq.addTask("Get DB Running","SCHOOL");
 //    }
 //    catch (SQLException e) {
 //      e.printStackTrace();
@@ -91,7 +91,10 @@ public class Main {
 //      sql = "INSERT INTO TODO VALUES('2', 'Figure this out', FALSE);";
 //      s = connection.createStatement();
 //      ResultSet rs = s.executeQuery(sql);
-    tdq.addTask("Figure This Out");
+    tdq.addTask("Figure This Out","GENERAL");
+    tdq.addTask("E-mail Boss","WORK");
+    tdq.addTask("Buy Fruits","HOME");
+    tdq.addTask("Pay Phone Bill","PERSONAL");
 //    } catch (SQLException e) {
 //      e.printStackTrace();
 //    }
@@ -124,7 +127,13 @@ public class Main {
 //      e.printStackTrace();
 //    }
 
-    List<ToDo> myList = tdq.getAllTasks();
-    printList(myList);
+//    List<ToDo> myList = tdq.getAllTasksFromTodoTable();
+//   printList(myList);
+    
+//    List<ToDo> myList1 = tdq.getAllTasksFromCategoriesTable();
+//    printList(myList1);
+      
+    List<ToDo> myList1 = tdq.getAllTasks();
+   	printList(myList1);
   }
 }
