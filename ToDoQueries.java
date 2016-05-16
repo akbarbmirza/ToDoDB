@@ -46,7 +46,7 @@ public class ToDoQueries {
       Statement s;
       String sql;
       ResultSet rs;
-/*
+
       // DROP TODO TABLE
      sql = "DROP TABLE TODO;";
       try {
@@ -54,18 +54,17 @@ public class ToDoQueries {
       rs = s.executeQuery(sql);
       } catch (SQLException e) {
         e.printStackTrace();
-      }			
-      
-   // DROP CATEGORIES TABLE
-            sql = "DROP TABLE CATEGORIES;";
-            try {
-            s = connection.createStatement();
-            rs = s.executeQuery(sql);
-            } catch (SQLException e) {
-              e.printStackTrace();
-            }			
+      }
 
-*/
+//   // DROP CATEGORIES TABLE
+//            sql = "DROP TABLE CATEGORIES;";
+//            try {
+//            s = connection.createStatement();
+//            rs = s.executeQuery(sql);
+//            } catch (SQLException e) {
+//              e.printStackTrace();
+//            }
+
  
       //************************* TODO Table ********************************
       

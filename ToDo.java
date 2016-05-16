@@ -93,7 +93,8 @@ public class ToDo {
 
   @Override
   public String toString() {
-    return String.format("%3s\t%-15s\t%-15s\t%s\t%10s", this.getID(), this.getTask(), this.getCategory(), this.doneEmoji(), this.getDateAdded());
+    return String.format("%3s\t%-15s\t%-15s\t%-10s\t%10s", this.getID(), this.getTask(), this.getCategory(), this
+            .doneEmoji(), this.getDateAdded());
   }
 
 }
