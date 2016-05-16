@@ -59,7 +59,7 @@ public class ToDo {
   // SETTERS
   //---------------------------------------------------------------------------
 
-  private void editTask(String newDesc) {
+  public void editTask(String newDesc) {
     this.taskDesc = newDesc;
   }
   
