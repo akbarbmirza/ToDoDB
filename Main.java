@@ -74,7 +74,7 @@ public class Main {
 //      e.printStackTrace();
 //    }
 
-    // INSERT INTO table
+    // INSERT INTO GTable
 //    try {
     // sql = "INSERT INTO TODO VALUES('1', 'Get DB Running', FALSE);";
     // s = connection.createStatement();
@@ -86,7 +86,7 @@ public class Main {
 //      e.printStackTrace();
 //    }
 
-    // INSERT INTO table (more)
+    // INSERT INTO GTable (more)
 //    try {
 //      sql = "INSERT INTO TODO VALUES('2', 'Figure this out', FALSE);";
 //      s = connection.createStatement();
@@ -111,7 +111,7 @@ public class Main {
 //      e.printStackTrace();
 //    }
 
-//    // DELETE FROM table
+//    // DELETE FROM GTable
 //    try {
 //      sql = "DELETE FROM TODO WHERE ID=2;";
 //      s = connection.createStatement();
@@ -135,5 +135,8 @@ public class Main {
       
     List<ToDo> myList1 = tdq.getAllTasks();
    	printList(myList1);
+
+    GTable gui = new GTable();
+    gui.runTable();
   }
 }

@@ -1,5 +1,3 @@
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -12,21 +10,20 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTable;
 import javax.swing.JButton;
-import javax.swing.JScrollBar;
 
-public class table extends JFrame {
+public class GTable extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
 	private JScrollPane scrollPane;
 
-	public static void main(String[] args) {
+	public void runTable() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					
 					//Run the program
-					table frame = new table();
+					GTable frame = new GTable();
 					frame.setVisible(true);
 					frame.setTitle("ToDo List");
 				} catch (Exception e) {
@@ -36,7 +33,7 @@ public class table extends JFrame {
 		});
 	}
 
-	public table() {
+	public GTable() {
 		//Make Sure it Exits on close
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//Set size of the new window
@@ -44,14 +41,14 @@ public class table extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
-		GUIproj window = new GUIproj();
-		//ContentPane for our table
+		final GUIproj window = new GUIproj();
+		//ContentPane for our GTable
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		//Declared a Table, Hardcoded the columnNames and the data inside
 		/**Your Job is to pull the data from the database and 
-		 * put it into the table*/
+		 * put it into the GTable*/
 		String[] columnNames = { "[  ]", "Task", "Category", "Date"};
 		
 		Object[][] data = {
@@ -69,8 +66,8 @@ public class table extends JFrame {
 		};
 		
 		//Declare Table
-		JTable table;
-		DefaultTableModel dtm = new DefaultTableModel(data,columnNames)
+		final JTable table;
+		final DefaultTableModel dtm = new DefaultTableModel(data,columnNames)
 			{
 				public Class<?> getColumnClass(int column){
 					
@@ -92,7 +89,7 @@ public class table extends JFrame {
 				
 			};
 		table = new JTable(dtm){
-			//Got this code from Stackoverflow to make the table data non-editable
+			//Got this code from Stackoverflow to make the GTable data non-editable
 			private static final long serialVersionUID = 1L;
 			
 			//This function makes only the first column editable
@@ -117,7 +114,7 @@ public class table extends JFrame {
 				//JOptionPane.showMessageDialog(null, "Task Added", "Add Window", JOptionPane.INFORMATION_MESSAGE);	
 
 				/** TODO:
-				 * Use Add Window to add the to table
+				 * Use Add Window to add the to GTable
 				 * Add row to the database
 				 * */
 			}
@@ -154,7 +151,7 @@ public class table extends JFrame {
 				window.editTaskGui();
 
 				/** TODO:
-				 * Edit the table
+				 * Edit the GTable
 				 * Also Remove Selected Row From Database
 				 */
 			}
@@ -181,7 +178,7 @@ public class table extends JFrame {
 		btnMarkDone.setBounds(307, 11, 89, 23);
 		contentPane.add(btnMarkDone);
 		
-		//This makes sure that the table is scrollable
+		//This makes sure that the GTable is scrollable
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 45, 414, 153);
 		contentPane.add(scrollPane);
