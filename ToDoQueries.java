@@ -37,6 +37,7 @@ public class ToDoQueries {
   // - creating a User class w/ username, password, tasks array that holds ids of tasks they own
   // TODO: Write Prepared Statement for deleting one item
   private PreparedStatement deleteTaskByIDFromTodoTable;
+  
 
 
   //Sql Statements For CATEGORIES Table
@@ -44,6 +45,7 @@ public class ToDoQueries {
   private PreparedStatement selectTaskByIDFromCategoriesTable;
   private PreparedStatement insertNewTaskToCategoriesTable;
   private PreparedStatement getDeleteTaskByIDFromCategoriesTable;
+  private PreparedStatement deleteTaskByIDFromCategoriesTable;
   
   // See all columns together
   private PreparedStatement selectAllTasks;
@@ -112,6 +114,18 @@ public class ToDoQueries {
       // create query that marks task as done in the database
       sql = "UPDATE TODO SET Done = TRUE WHERE ID = ?;";
       markTaskDoneByIDFromTodoTable = connection.prepareStatement(sql);
+      
+      // create query that deletes task from todo table
+      sql = "DELETE FROM TODO WHERE ID = ?;";
+      deleteTaskByIDFromTodoTable = connection.prepareStatement(sql);
+      
+   // create query that deletes task from categories table
+      sql = "DELETE FROM CATEGORIES WHERE ID = ?;";
+      deleteTaskByIDFromCategoriesTable = connection.prepareStatement(sql);
+      
+      
+      
+      
 
       
   // ******************* CATEGORIES TABLE ************************************** 
@@ -322,8 +336,36 @@ public class ToDoQueries {
       e.printStackTrace();
     }
   };
- 
 
+  
+ // Mark Done as True in TODO Table
+  
+  public void markDone(int ID) {
+	 try {
+		 markTaskDoneByIDFromTodoTable.setInt(1,ID);
+		 // Execute the statement
+		 markTaskDoneByIDFromTodoTable.executeUpdate();
+	 } catch (SQLException e) {
+		      e.printStackTrace();
+		    }
+	  
+  }
+  
+  // Delete task from BothTables
+  
+  public void deleteTaskfromBothTables(int ID) {
+	  try {
+		  deleteTaskByIDFromTodoTable.setInt(1, ID);
+		  deleteTaskByIDFromCategoriesTable.setInt(1,ID);
+		  
+		  // Execute the statements
+		  deleteTaskByIDFromTodoTable.executeUpdate();
+		  deleteTaskByIDFromCategoriesTable.executeUpdate();
+		  
+	  }	catch (SQLException e) {
+	      e.printStackTrace();
+	    }
+  }
 
   // close the database connection
   public void close() {
