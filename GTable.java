@@ -1,3 +1,4 @@
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -214,7 +215,7 @@ public class GTable extends JFrame {
 	}
 	
 	public void addTaskGui(){
-		JFrame frameAdd = new JFrame("Add Task");
+		final JFrame frameAdd = new JFrame("Add Task");
 		
 		frameAdd.setSize(400, 300);
 		frameAdd.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -306,7 +307,7 @@ public class GTable extends JFrame {
 
 public void editTaskGui(){
 		
-        JFrame frameEdit = new JFrame("Edit Task");
+        final JFrame frameEdit = new JFrame("Edit Task");
                 //frameEdit.setVisible(true);
                 frameEdit.setSize(400, 300);
                 
