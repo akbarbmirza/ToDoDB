@@ -324,6 +324,7 @@ public class GTable extends JFrame {
       public void actionPerformed(ActionEvent e) {
         dtm.addRow(new Object[]{false,textField.getText(),textField_1.getText(),"05-16-2016"});
         // TODO: call function to save into database
+        tdq.addTask(textField.getText(), textField_1.getText());
         frameAdd.dispose();
       }
     });
