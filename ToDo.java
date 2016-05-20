@@ -29,6 +29,20 @@ public class ToDo {
     
   }
 
+  ToDo(int ID, String desc, String category) {
+    // Initialize Fields
+    this.ID = ID;
+    this.taskDesc = desc;
+    this.isDone = false;
+    this.dateAdded = new java.sql.Date(new java.util.Date().getTime());
+    if (category == null) {
+      this.category = "N/A";
+    } else {
+      this.category = category;
+    }
+
+  }
+
   //===========================================================================
   // METHODS
   //===========================================================================
