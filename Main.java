@@ -9,7 +9,13 @@ public class Main {
     // create a scanner to take in input
     Scanner in = new Scanner(System.in);
     try {
-      int choice = in.nextInt();
+      String line = in.nextLine();
+      int choice;
+      try {
+        choice = Integer.parseInt(line);
+      } catch (NumberFormatException ex) {
+        choice = 0;
+      }
 
       switch (choice) {
         case 1:
@@ -17,8 +23,10 @@ public class Main {
           break;
         case 2:
           // Mark Task Done
+          markDone(in, tdq);
           break;
         case 3:
+          // Add Task
           addTask(in, tdq);
           break;
         case 4:
@@ -37,18 +45,35 @@ public class Main {
   }
 
   public static void addTask(Scanner in, ToDoQueries tdq) {
-    String task, category;
+    String task, category, line;
 
     // Print Instructions for Adding Task
     System.out.println("--- Add a Task ---");
     System.out.println("What do you need to do? Type q() to Cancel\n> ");
     if (in.hasNext()) {
-      if (!in.nextLine().contains("q()")) {
-        task = in.nextLine();
+      line = in.nextLine();
+      if (!line.contains("q()")) {
+        task = line;
         System.out.println("What category is this task?\n> ");
         category = in.nextLine();
         tdq.addTask(task, category);
         System.out.printf("Your task '%s' has been added!%n", task);
+      }
+    }
+  }
+
+  public static void markDone(Scanner in, ToDoQueries tdq) {
+    String line;
+    int ID;
+    System.out.println("--- Mark Task Done ---");
+    printList(tdq.getTodoList());
+    System.out.println("What do you want to mark done? Type q() to Cancel\n> ");
+    if (in.hasNext()) {
+      line = in.nextLine();
+      if (!line.contains("q()")) {
+        ID = Integer.parseInt(line);
+        tdq.markDone(ID);
+        System.out.printf("TASK %d has been marked done!%n", ID);
       }
     }
   }
@@ -106,7 +131,7 @@ public class Main {
     tdq.addTask("Buy Fruits","HOME");
     tdq.addTask("Pay Phone Bill","PERSONAL");
 
-    List<ToDo> myList1 = tdq.getAllTasks();
+    List<ToDo> myList1 = tdq.getTodoList();
 
 
     while(true) {
