@@ -18,7 +18,7 @@ public class ToDoQueries {
   private static final String URL = "jdbc:hsqldb:testdb";
   private static final String USERNAME = "sa";
   private static final String PASSWORD = "";
-  private final ArrayList<ToDo> allTasks = new ArrayList<ToDo>();
+  private final ArrayList<ToDo> todoList = new ArrayList<ToDo>();
 
   private Connection connection; // manages connection
   
@@ -223,7 +223,7 @@ public class ToDoQueries {
     return results;
   }
 
-  // FOR CATEOGIRES TABLE
+  // FOR CATEGORIES TABLE
   
   public List<ToDo> getAllTasksFromCategoriesTable() {
 	    List<ToDo> results = null;
@@ -284,11 +284,22 @@ public class ToDoQueries {
 
 	    return results;
 	  }
+
+  public ArrayList<ToDo> getTodoList() {
+    return todoList;
+  }
   
   //---------------------------------------------------------------------------
   // SETTERS
   //---------------------------------------------------------------------------
 
+  private void addToTodos(ToDo toAdd) {
+    this.todoList.add(toAdd);
+  }
+
+  private void updateTodo(ToDo toUpdate) {
+    this.todoList.set(toUpdate.getID() - 1, toUpdate);
+  }
 
   //---------------------------------------------------------------------------
   // OTHER METHODS
@@ -314,6 +325,9 @@ public class ToDoQueries {
       // insert the new entry; returns @ of rows updated
       result = insertNewTaskToTodoTable.executeUpdate();
       insertNewTaskToCategoriesTable.executeUpdate();
+
+      // add to our todoList
+      addToTodos(newTask);
     } catch (SQLException e) {
       e.printStackTrace();
       close();
@@ -333,6 +347,9 @@ public class ToDoQueries {
 
       // Execute our statement
       updateTaskByIDFromTodoTable.executeUpdate();
+
+      // Update our todoList
+      updateTodo(toEdit);
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -342,10 +359,16 @@ public class ToDoQueries {
  // Mark Done as True in TODO GTable
   
   public void markDone(int ID) {
+    if (ID > getTodoList().size() || ID < 1) {
+      System.out.println("Sorry, that task doesn't exist");
+    }
 	 try {
 		 markTaskDoneByIDFromTodoTable.setInt(1,ID);
 		 // Execute the statement
 		 markTaskDoneByIDFromTodoTable.executeUpdate();
+
+     // update task on list
+     getTodoList().get(ID - 1).markDone();
 	 } catch (SQLException e) {
 		      e.printStackTrace();
 		    }
