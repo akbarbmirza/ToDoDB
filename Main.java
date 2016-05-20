@@ -134,11 +134,14 @@ public class Main {
     List<ToDo> myList1 = tdq.getTodoList();
 
 
-    while(true) {
-      printList(myList1);
-      printMenu();
-      handleInput(tdq);
-    }
+//    while(true) {
+//      printList(myList1);
+//      printMenu();
+//      handleInput(tdq);
+//  }
+
+    GTable gui = new GTable();
+    gui.runTable(tdq);
 
 
 
