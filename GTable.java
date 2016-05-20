@@ -162,10 +162,6 @@ public class GTable extends JFrame {
       @Override
       public void mouseClicked(MouseEvent arg0) {
         addTaskGui();
-        /** TODO:
-         * Use Add Window to add the to GTable
-         * Add row to the database
-         * */
       }
     });
     btnAdd.setBounds(10, 11, 100, 40);
@@ -184,10 +180,8 @@ public class GTable extends JFrame {
         else{
           dtm.removeRow(currentRow);
           JOptionPane.showMessageDialog(null, "Task Deleted", "Delete Message", JOptionPane.INFORMATION_MESSAGE);
+          // TODO: Delete Task on Database
         }
-        /** TODO:
-         * Also Remove Selected Row From Database
-         */
       }
     });
     btnDelete.setBounds(120, 11, 100, 40);
@@ -204,9 +198,6 @@ public class GTable extends JFrame {
           editTaskGui();}
         else
           JOptionPane.showMessageDialog(null, "No Task Selected", "Edit Window", JOptionPane.WARNING_MESSAGE);
-        /** TODO:
-         * Also Edit Selected Row From Database
-         */
       }
     });
     btnEdit.setBounds(230, 11, 100, 40);
@@ -220,16 +211,18 @@ public class GTable extends JFrame {
 
         if(table.getSelectedRow() != -1){
           int currentRow = table.convertRowIndexToModel(table.getSelectedRow());
-          if(dtm.getValueAt(currentRow,0).equals(true))
-            dtm.setValueAt(false,currentRow,0);
-          else
+          if(dtm.getValueAt(currentRow,0).equals(true)) {
+            dtm.setValueAt(false, currentRow, 0);
+            // TODO: Update Done in Database - markNotDone
+          }
+          else {
             dtm.setValueAt(true, currentRow, 0);
+            // TODO: Update Done in Database - markDone
+          }
         }
         else
           JOptionPane.showMessageDialog(null, "No Task Selected", "Done Window", JOptionPane.WARNING_MESSAGE);
-        /** TODO:
-         * Edit the boolean value of done
-         */
+        // TODO: Update Done in Database
       }
     });
     btnMarkDone.setBounds(340, 11, 100, 40);
@@ -369,7 +362,7 @@ public class GTable extends JFrame {
         if (e.getKeyCode() == KeyEvent.VK_ENTER){
           dtm.setValueAt(textField.getText(),currentRow,1);
           dtm.setValueAt(textField_1.getText() , currentRow,2);
-          // TODO: call function to edit into database
+          // TODO: Edit Task in Database
           frameEdit.dispose();
         }
 
