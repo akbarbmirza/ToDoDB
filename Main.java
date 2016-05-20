@@ -133,13 +133,25 @@ public class Main {
 
     List<ToDo> myList1 = tdq.getTodoList();
 
+//<<<<<<< Updated upstream
+//=======
+
+    
+
+//>>>>>>> Stashed changes
     GTable gui = new GTable(tdq);
     gui.runTable();
 
     while(true) {
+//<<<<<<< Updated upstream
       printList(myList1);
       printMenu();
       handleInput(tdq);
+//=======
+        printList(myList1);
+        printMenu();
+        handleInput(tdq);
+//>>>>>>> Stashed changes
     }
 
 //    List<ToDo> myList = tdq.getAllTasksFromTodoTable();
