@@ -140,8 +140,8 @@ public class Main {
 //      handleInput(tdq);
 //  }
 
-    GTable gui = new GTable();
-    gui.runTable(tdq);
+    GTable gui = new GTable(tdq);
+    gui.runTable();
 
 
 

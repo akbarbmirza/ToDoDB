@@ -31,6 +31,10 @@ public class GTable extends JFrame {
   JTextArea textEditTask; // for Edit Task method
   JTextField textEditCatagory; // for Edit Task method
 
+  // DataBase Connection Class
+  private ToDoQueries tdq;
+
+
   String[] columnNames = { "[  ]", "Task", "Category", "Date"};
   Object[][] data = {
 //          {true, "Homework Assignment", "School", "06-05-2016"},
@@ -79,13 +83,13 @@ public class GTable extends JFrame {
 
     };
   };
-  public void runTable(final ToDoQueries tdq) {
+  public void runTable() {
     EventQueue.invokeLater(new Runnable() {
       public void run() {
         try {
 
           //Run the program
-          GTable frame = new GTable();
+          GTable frame = new GTable(tdq);
           frame.setVisible(true);
           frame.setTitle("ToDo List");
 
@@ -105,7 +109,10 @@ public class GTable extends JFrame {
     });
   }
 
-  public GTable() {
+  public GTable(ToDoQueries tdq) {
+    // set the todo queries
+    this.tdq = tdq;
+
     //Make Sure it Exits on close
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     //Set size of the new window
