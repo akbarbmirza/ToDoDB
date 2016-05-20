@@ -1,10 +1,81 @@
 import java.sql.*;
+import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
 
-  public static void handleInput() {
+  public static void handleInput(ToDoQueries tdq) {
+    // create a scanner to take in input
+    Scanner in = new Scanner(System.in);
+    try {
+      String line = in.nextLine();
+      int choice;
+      try {
+        choice = Integer.parseInt(line);
+      } catch (NumberFormatException ex) {
+        choice = 0;
+      }
 
+      switch (choice) {
+        case 1:
+          // Show Tasks Menu
+          break;
+        case 2:
+          // Mark Task Done
+          markDone(in, tdq);
+          break;
+        case 3:
+          // Add Task
+          addTask(in, tdq);
+          break;
+        case 4:
+          // Edit Task
+          break;
+        case 5:
+          // Quit
+          System.exit(0);
+          break;
+        default:
+          System.out.println("That number is not on the menu. Please try one on the menu");
+      }
+    } catch (InputMismatchException e) {
+      System.out.println("Your input is invalid. Please enter a number on the menu");
+    }
+  }
+
+  public static void addTask(Scanner in, ToDoQueries tdq) {
+    String task, category, line;
+
+    // Print Instructions for Adding Task
+    System.out.println("--- Add a Task ---");
+    System.out.println("What do you need to do? Type q() to Cancel\n> ");
+    if (in.hasNext()) {
+      line = in.nextLine();
+      if (!line.contains("q()")) {
+        task = line;
+        System.out.println("What category is this task?\n> ");
+        category = in.nextLine();
+        tdq.addTask(task, category);
+        System.out.printf("Your task '%s' has been added!%n", task);
+      }
+    }
+  }
+
+  public static void markDone(Scanner in, ToDoQueries tdq) {
+    String line;
+    int ID;
+    System.out.println("--- Mark Task Done ---");
+    printList(tdq.getTodoList());
+    System.out.println("What do you want to mark done? Type q() to Cancel\n> ");
+    if (in.hasNext()) {
+      line = in.nextLine();
+      if (!line.contains("q()")) {
+        ID = Integer.parseInt(line);
+        tdq.markDone(ID);
+        System.out.printf("TASK %d has been marked done!%n", ID);
+      }
+    }
   }
 
   public static void printMenu() {
@@ -26,8 +97,6 @@ public class Main {
   }
 
   public static void main(String[] args) {
-
-    printMenu();
 
 //    ToDo myTask = new ToDo("Save the World!");
     System.out.printf("%3s\t%-15s\t%-15s\t%s\t%10s%n", "NUM", "TASK", "CATEGORY", "DONE", "DATE");
@@ -56,76 +125,25 @@ public class Main {
     String sql;
     ToDoQueries tdq = new ToDoQueries();
 
-    // DROP TABLE
-//    sql = "DROP TABLE TODO;";
-//    try {
-//      s = connection.createStatement();
-//      ResultSet rs = s.executeQuery(sql);
-//    } catch (SQLException e) {
-//      e.printStackTrace();
-//    }
-
-//    // CREATE TABLE
-//    sql = "CREATE TABLE TODO(ID INT, Task VARCHAR(255), Done BOOLEAN NOT NULL);";
-//    try {
-//      s = connection.createStatement();
-//      ResultSet rs = s.executeQuery(sql);
-//    } catch (SQLException e) {
-//      e.printStackTrace();
-//    }
-
-    // INSERT INTO GTable
-//    try {
-    // sql = "INSERT INTO TODO VALUES('1', 'Get DB Running', FALSE);";
-    // s = connection.createStatement();
-    // ResultSet rs = s.executeQuery(sql);
-
     tdq.addTask("Get DB Running","SCHOOL");
-//    }
-//    catch (SQLException e) {
-//      e.printStackTrace();
-//    }
-
-    // INSERT INTO GTable (more)
-//    try {
-//      sql = "INSERT INTO TODO VALUES('2', 'Figure this out', FALSE);";
-//      s = connection.createStatement();
-//      ResultSet rs = s.executeQuery(sql);
     tdq.addTask("Figure This Out","GENERAL");
     tdq.addTask("E-mail Boss","WORK");
     tdq.addTask("Buy Fruits","HOME");
     tdq.addTask("Pay Phone Bill","PERSONAL");
-//    } catch (SQLException e) {
-//      e.printStackTrace();
-//    }
 
-//    // SELECT FROM TABLE
-//    try {
-//      sql = "SELECT * FROM TODO ORDER BY ID ASC;";
-//      s = connection.createStatement();
-//      ResultSet rs = s.executeQuery(sql);
-//      while (rs.next()){
-//        System.out.println(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3));
-//      }
-//    } catch (SQLException e) {
-//      e.printStackTrace();
-//    }
+    List<ToDo> myList1 = tdq.getTodoList();
 
-//    // DELETE FROM GTable
-//    try {
-//      sql = "DELETE FROM TODO WHERE ID=2;";
-//      s = connection.createStatement();
-//      ResultSet rs = s.executeQuery(sql);
-//    } catch (SQLException e) {
-//      e.printStackTrace();
-//    }
-//
-//    // Close database connection
-//    try {
-//      connection.close();
-//    } catch (SQLException e) {
-//      e.printStackTrace();
-//    }
+
+//    while(true) {
+//      printList(myList1);
+//      printMenu();
+//      handleInput(tdq);
+//  }
+
+    GTable gui = new GTable();
+    gui.runTable(tdq);
+
+
 
 //    List<ToDo> myList = tdq.getAllTasksFromTodoTable();
 //   printList(myList);
@@ -133,10 +151,9 @@ public class Main {
 //    List<ToDo> myList1 = tdq.getAllTasksFromCategoriesTable();
 //    printList(myList1);
       
-    List<ToDo> myList1 = tdq.getAllTasks();
-   	printList(myList1);
 
-    GTable gui = new GTable();
-    gui.runTable();
+
+//    GTable gui = new GTable();
+//    gui.runTable();
   }
 }
