@@ -207,7 +207,6 @@ public class GTable extends JFrame {
 					}
 				} else
 					JOptionPane.showMessageDialog(null, "No Task Selected", "Done Window", JOptionPane.WARNING_MESSAGE);
-				// TODO: Update Done in Database
 			}
 		});
 		btnMarkDone.setBounds(230, 11, 100, 40);
