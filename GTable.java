@@ -419,7 +419,7 @@ public class GTable extends JFrame {
 
 			Object[] toAdd = { isDone, task, category, date };
 
-			System.out.println("data added");
+//			System.out.println("data added");
 			dtm.addRow(toAdd);
 		}
 	}
