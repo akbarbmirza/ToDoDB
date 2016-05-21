@@ -329,23 +329,30 @@ public class ToDoQueries {
 		// return result;
 	}
 
-	public void editTask(ToDo toEdit, String newDesc) {
-		try {
-			// Update Category on our TD object
-			toEdit.editTask(newDesc);
+	public int editTask(int ID, String newDesc) {
+		if (ID > getTodoList().size() || ID < 1) {
+      System.out.println("Sorry, that task doesn't exist");
+      return -1; // error
+    }
+    try {
+      // Update task on our TD object
+      getTodoList().get(ID - 1).editTask(newDesc);
 
 			// Initialize our Prepared Statement
 			updateTaskByIDFromTodoTable.setString(1, newDesc);
-			updateTaskByIDFromTodoTable.setInt(2, toEdit.getID());
+			updateTaskByIDFromTodoTable.setInt(2, ID);
 
 			// Execute our statement
 			updateTaskByIDFromTodoTable.executeUpdate();
 
 			// Update our todoList
-			updateTodo(toEdit);
+			// updateTodo(toEdit);
 		} catch (SQLException e) {
 			e.printStackTrace();
+      return -1; // error
 		}
+
+    return 0; // success
 	};
 
 	// Mark Done as True in TODO GTable

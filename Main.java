@@ -31,6 +31,7 @@ public class Main {
 				break;
 			case 4:
 				// Edit Task
+        editTask(in, tdq);
 				break;
 			case 5:
 				// Quit
@@ -61,6 +62,27 @@ public class Main {
 			}
 		}
 	}
+
+  public static void editTask(Scanner in, ToDoQueries tdq) {
+    int ID;
+    String task, line;
+
+    // Print Instructions for Editing a Task
+    System.out.println("--- Edit a Task ---");
+    System.out.print("What task do you want to edit? Type q() to Cancel\n> ");
+    if (in.hasNext()) {
+      line = in.nextLine();
+      if (!line.contains("q()")) {
+        ID = Integer.parseInt(line);
+        System.out.println("What do you want to change the task to?\n> ");
+        task = in.nextLine();
+        if (tdq.editTask(ID, task) != -1)
+          System.out.printf("Task %d was edited!%n", ID);
+        else
+          System.out.printf("Task %d could not be edited!%n", ID);
+      }
+    }
+  }
 
 	public static void markDone(Scanner in, ToDoQueries tdq) {
 		String line;
