@@ -49,7 +49,7 @@ public class Main {
 
 		// Print Instructions for Adding Task
 		System.out.println("--- Add a Task ---");
-		System.out.println("What do you need to do? Type q() to Cancel\n> ");
+		System.out.print("What do you need to do? Type q() to Cancel\n> ");
 		if (in.hasNext()) {
 			line = in.nextLine();
 			if (!line.contains("q()")) {
@@ -67,7 +67,7 @@ public class Main {
 		int ID;
 		System.out.println("--- Mark Task Done ---");
 		printList(tdq.getTodoList());
-		System.out.println("What do you want to mark done? Type q() to Cancel\n> ");
+		System.out.print("What do you want to mark done? Type q() to Cancel\n> ");
 		if (in.hasNext()) {
 			line = in.nextLine();
 			if (!line.contains("q()")) {
@@ -79,7 +79,8 @@ public class Main {
 	}
 
 	public static void printMenu() {
-		final String MENU = "=== MENU ===\n" + "(1)\tSee Tasks\n" + "(2)\tMark Task Done\n" + "(3)\tAdd New Task\n";
+		final String MENU = "=== MENU ===\n" + "1:\tSee Tasks\n" + "2:\tMark Task Done\n" + "3:\tAdd New Task\n"
+            + "4:\tEdit a Task\n" + "5:\tQuit\n";
 		final String PROMPT = "Please Choose from the Menu:\n>\t";
 
 		System.out.println(MENU);
@@ -94,11 +95,7 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		// ToDo myTask = new ToDo("Save the World!");
 		System.out.printf("%3s\t%-15s\t%-15s\t%s\t%10s%n", "NUM", "TASK", "CATEGORY", "DONE", "DATE");
-		// System.out.println(myTask);
-		// myTask.markDone();
-		// System.out.println(myTask);
 
 		// SAMPLE CODE FROM PROFESSOR
 		// Establish database connection
@@ -136,12 +133,6 @@ public class Main {
 			printMenu();
 			handleInput(tdq);
 		}
-
-		// List<ToDo> myList = tdq.getAllTasksFromTodoTable();
-		// printList(myList);
-
-		// List<ToDo> myList1 = tdq.getAllTasksFromCategoriesTable();
-		// printList(myList1);
 
 		// GTable gui = new GTable();
 		// gui.runTable();

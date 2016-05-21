@@ -107,7 +107,7 @@ public class GTable extends JFrame {
 		});
 	}
 
-	public GTable(ToDoQueries tdq) {
+	public GTable(final ToDoQueries tdq) {
 		// set the todo queries
 		this.tdq = tdq;
 
