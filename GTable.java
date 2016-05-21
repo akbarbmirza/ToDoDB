@@ -26,8 +26,8 @@ public class GTable extends JFrame {
 
 	private JPanel contentPane;
 	// *******************************************************************************
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField textField; //Textfield for Add Task and Edit Task GUI
+	private JTextField textField_1; //Textfield for Add Task and Edit Task GUI
 	JTextArea textEditTask; // for Edit Task method
 	JTextField textEditCatagory; // for Edit Task method
 
@@ -35,19 +35,7 @@ public class GTable extends JFrame {
 	private ToDoQueries tdq;
 
 	String[] columnNames = { "[  ]", "Task", "Category", "Date", "ID", "USER" };
-	Object[][] data = {
-			// {true, "Homework Assignment", "School", "06-05-2016"},
-			// {true, "Doctor's Appointment", "Doctor","06-05-2016"},
-			// {false, "Meeting", "Work","06-10-2016"},
-			// {false, "Meeting", "Work","06-06-2016"},
-			// {true, "Meeting", "Work","06-15-2016"},
-			// {true, "Meeting", "Work","06-21-2016"},
-			// {false, "Doctor's Appointment", "Doctor","07-05-2016"},
-			// {false, "Doctor's Appointment", "Doctor","08-05-2016"},
-			// {true, "Homework Assignment", "School","09-15-2016"},
-			// {false, "Homework Assignment", "School","10-13-2016"},
-			// {true, "Homework Assignment", "School","06-05-2016"},
-	};
+	Object[][] data = {};
 
 	final DefaultTableModel dtm = new DefaultTableModel(data, columnNames) {
 		public Class<?> getColumnClass(int column) {
@@ -92,14 +80,6 @@ public class GTable extends JFrame {
           WindowLogin login = new WindowLogin();
           String username = login.getUsername();
           frame.setTitle(username + "'s ToDo List");
-
-					// Object[][] newData = {
-					// {true, "hello","hi","wow"},
-					// {false, "hello","hi","wow3"},
-					// {true, "test","coolf","wow2"},
-					// {true, "nice","hiii","cool"},
-					// {false, "good","hii","wow"},
-					// };
 					ArrayList<ToDo> newData = tdq.getTodoList();
 					frame.addData(newData);
 				} catch (Exception e) {
@@ -220,10 +200,14 @@ public class GTable extends JFrame {
 					if (dtm.getValueAt(currentRow, 0).equals(true)) {
 						dtm.setValueAt(false, currentRow, 0);
 						// Database markNotDone correctly working
+            JOptionPane.showMessageDialog(null, "Task Marked Incomplete", "Done Window",
+                    JOptionPane.INFORMATION_MESSAGE);
 						tdq.markDone(currentRow+1);
 					} else {
 						dtm.setValueAt(true, currentRow, 0);
-						// Database markDone correctly working 
+						// Database markDone correctly working
+            JOptionPane.showMessageDialog(null, "Task Marked Done", "Done Window",
+                    JOptionPane.INFORMATION_MESSAGE);
 						tdq.markDone(currentRow+1);
 					}
 				} else
@@ -424,7 +408,8 @@ public class GTable extends JFrame {
 
 			Object[] toAdd = { isDone, task, category, date };
 
-//			System.out.println("data added");
+      // NOTE: Code for Debugging
+      // System.out.println("data added");
 			dtm.addRow(toAdd);
 		}
 	}
@@ -433,4 +418,8 @@ public class GTable extends JFrame {
 		return dtm;
 	}
 
+  public static void clearTable(JTable table) {
+    DefaultTableModel dtm = new DefaultTableModel();
+    table.setModel(dtm);
+  }
 }
