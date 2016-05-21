@@ -287,7 +287,7 @@ public class GTable extends JFrame {
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) { // add using the ENTER button
 					dtm.addRow(new Object[] { false, textField.getText(), textField_1.getText(), "05-16-2016" });
-					// TODO: call function to save into database
+					// calling function to save into database from GUI
 					tdq.addTask(textField.getText(), textField_1.getText()); // added to Database
 					frameAdd.dispose();
 				}
@@ -326,8 +326,8 @@ public class GTable extends JFrame {
 
 			public void actionPerformed(ActionEvent e) { // add using clicking the Add button
 				dtm.addRow(new Object[] { false, textField.getText(), textField_1.getText(), "05-16-2016" });
-				// TODO: call function to save into database
-				tdq.addTask(textField.getText(), textField_1.getText()); // added to Database
+				// call function to save into database from GUI
+				tdq.addTask(textField.getText(), textField_1.getText()); // data added to Database
 				frameAdd.dispose();
 			}
 		});
@@ -370,9 +370,8 @@ public class GTable extends JFrame {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					dtm.setValueAt(textField.getText(), currentRow, 1);
 					dtm.setValueAt(textField_1.getText(), currentRow, 2);
-					// TODO: Edit Task in Database
-//					ToDo toEdit = tdq.getTaskByIDFromTodoTable(currentRow);
-//					tdq.editTask(toEdit, textField_1.getText());
+					// Edit Task in Database from GUI
+					tdq.editTask(currentRow + 1, textField.getText());
 					frameEdit.dispose();
 				}
 
@@ -407,9 +406,8 @@ public class GTable extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				dtm.setValueAt(textField.getText(), currentRow, 1);
 				dtm.setValueAt(textField_1.getText(), currentRow, 2);
-				// TODO: call function to edit into database
-//				ToDo toEdit = tdq.getTaskByIDFromTodoTable(2);
-//				tdq.editTask(toEdit, textField_1.getText());
+				// calling function to edit into database
+				tdq.editTask(currentRow + 1, textField.getText());
 				frameEdit.dispose();
 			}
 		});
