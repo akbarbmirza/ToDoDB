@@ -89,9 +89,9 @@ public class GTable extends JFrame {
 					// Run the program
 					GTable frame = new GTable(tdq);
 					frame.setVisible(true);
-          WindowLogin login = new WindowLogin();
-          String username = login.getUsername();
-          frame.setTitle(username + "'s ToDo List");
+					WindowLogin login = new WindowLogin();
+					String username = login.getUsername();
+					frame.setTitle(username + "'s ToDo List");
 
 					// Object[][] newData = {
 					// {true, "hello","hi","wow"},
@@ -145,12 +145,14 @@ public class GTable extends JFrame {
 					if (column == 0) {
 						if (dtm.getValueAt(currentRow, 0).equals(true)) {
 							dtm.setValueAt(false, currentRow, 0);
-							tdq.markDone(currentRow+1); // marked Not Done by clicking checkbox
+							tdq.markDone(currentRow + 1);
+							// marked Not Done by clicking checkbox
 							JOptionPane.showMessageDialog(null, "Task Marked Incomplete", "Done Window",
 									JOptionPane.INFORMATION_MESSAGE);
 						} else {
 							dtm.setValueAt(true, currentRow, 0);
-							tdq.markDone(currentRow+1); // marked Done by clicking checkbox
+							tdq.markDone(currentRow + 1);
+							// marked Done by clicking checkbox
 							JOptionPane.showMessageDialog(null, "Task Marked Done", "Done Window",
 									JOptionPane.INFORMATION_MESSAGE);
 						}
@@ -170,29 +172,6 @@ public class GTable extends JFrame {
 		btnAdd.setBounds(10, 11, 100, 40);
 		contentPane.add(btnAdd);
 
-		// Delete Button - Delete the task
-		JButton btnDelete = new JButton("Delete");
-		// Clicking the Mouse causes a dialog box to open
-		btnDelete.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				int currentRow = table.convertRowIndexToModel(table.getSelectedRow());
-				if (currentRow == -1) {
-					JOptionPane.showMessageDialog(null, "No Task Selected", "Delete Message",
-							JOptionPane.WARNING_MESSAGE);
-				} else {
-//					tdq.deleteTaskfromBothTables(currentRow);
-					dtm.removeRow(currentRow);
-					JOptionPane.showMessageDialog(null, "Task Deleted", "Delete Message",
-							JOptionPane.INFORMATION_MESSAGE);
-					// TODO: Delete Task on Database
-					
-				}
-			}
-		});
-		btnDelete.setBounds(120, 11, 100, 40);
-		contentPane.add(btnDelete);
-
 		// Edit Button - Edit the task
 		JButton btnEdit = new JButton("Edit");
 		// Clicking the Mouse causes a dialog box to open
@@ -206,7 +185,7 @@ public class GTable extends JFrame {
 					JOptionPane.showMessageDialog(null, "No Task Selected", "Edit Window", JOptionPane.WARNING_MESSAGE);
 			}
 		});
-		btnEdit.setBounds(230, 11, 100, 40);
+		btnEdit.setBounds(120, 11, 100, 40);
 		contentPane.add(btnEdit);
 
 		// Done Button - Marks the task as done
@@ -220,18 +199,18 @@ public class GTable extends JFrame {
 					if (dtm.getValueAt(currentRow, 0).equals(true)) {
 						dtm.setValueAt(false, currentRow, 0);
 						// Database markNotDone correctly working
-						tdq.markDone(currentRow+1);
+						tdq.markDone(currentRow + 1);
 					} else {
 						dtm.setValueAt(true, currentRow, 0);
-						// Database markDone correctly working 
-						tdq.markDone(currentRow+1);
+						// Database markDone correctly working
+						tdq.markDone(currentRow + 1);
 					}
 				} else
 					JOptionPane.showMessageDialog(null, "No Task Selected", "Done Window", JOptionPane.WARNING_MESSAGE);
 				// TODO: Update Done in Database
 			}
 		});
-		btnMarkDone.setBounds(340, 11, 100, 40);
+		btnMarkDone.setBounds(230, 11, 100, 40);
 		contentPane.add(btnMarkDone);
 
 		// This makes sure that the GTable is scrollable
@@ -244,12 +223,12 @@ public class GTable extends JFrame {
 		table.getColumnModel().getColumn(1).setPreferredWidth(200);
 		table.getColumnModel().getColumn(2).setPreferredWidth(50);
 		table.getColumnModel().getColumn(3).setPreferredWidth(50);
-    table.getColumnModel().getColumn(4).setPreferredWidth(0);
-    table.getColumnModel().getColumn(5).setPreferredWidth(0);
-    table.getColumnModel().getColumn(5).setMaxWidth(0);
-    table.getColumnModel().getColumn(4).setMaxWidth(0);
-    table.removeColumn(table.getColumnModel().getColumn(5));
-    table.removeColumn(table.getColumnModel().getColumn(4));
+		table.getColumnModel().getColumn(4).setPreferredWidth(0);
+		table.getColumnModel().getColumn(5).setPreferredWidth(0);
+		table.getColumnModel().getColumn(5).setMaxWidth(0);
+		table.getColumnModel().getColumn(4).setMaxWidth(0);
+		table.removeColumn(table.getColumnModel().getColumn(5));
+		table.removeColumn(table.getColumnModel().getColumn(4));
 		table.setForeground(Color.orange);
 		table.setBackground(Color.GRAY);
 	}
@@ -285,10 +264,12 @@ public class GTable extends JFrame {
 		textField_1.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ENTER) { // add using the ENTER button
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) { // add using the
+															// ENTER button
 					dtm.addRow(new Object[] { false, textField.getText(), textField_1.getText(), "05-16-2016" });
 					// calling function to save into database from GUI
-					tdq.addTask(textField.getText(), textField_1.getText()); // added to Database
+					tdq.addTask(textField.getText(), textField_1.getText()); 
+					// added to Database
 					frameAdd.dispose();
 				}
 
@@ -324,10 +305,12 @@ public class GTable extends JFrame {
 		// Save button's action
 		btnSave.addActionListener(new ActionListener() {
 
-			public void actionPerformed(ActionEvent e) { // add using clicking the Add button
+			public void actionPerformed(ActionEvent e) { 
+				// add using clicking the Add button
 				dtm.addRow(new Object[] { false, textField.getText(), textField_1.getText(), "05-16-2016" });
 				// call function to save into database from GUI
-				tdq.addTask(textField.getText(), textField_1.getText()); // data added to Database
+				tdq.addTask(textField.getText(), textField_1.getText());
+				// data added to Database
 				frameAdd.dispose();
 			}
 		});
@@ -411,7 +394,6 @@ public class GTable extends JFrame {
 				frameEdit.dispose();
 			}
 		});
-
 	}
 
 	public final void addData(ArrayList<ToDo> data) {
@@ -424,7 +406,7 @@ public class GTable extends JFrame {
 
 			Object[] toAdd = { isDone, task, category, date };
 
-//			System.out.println("data added");
+			// System.out.println("data added");
 			dtm.addRow(toAdd);
 		}
 	}
