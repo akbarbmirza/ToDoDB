@@ -81,12 +81,12 @@ public class ToDo {
 	}
 
 	public void markDone() {
-		this.isDone = true;
+		this.isDone = !this.isDone;
 	}
 
-	public void markNotDone() {
-		this.isDone = false;
-	}
+//	public void markNotDone() {
+//		this.isDone = false;
+//	}
 
 	// public void setDateAdded(int year, int month, int date) {
 	// this.dateAdded = new Date();

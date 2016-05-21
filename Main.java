@@ -65,23 +65,23 @@ public class Main {
 	public static void markDone(Scanner in, ToDoQueries tdq) {
 		String line;
 		int ID;
-		System.out.println("--- Mark Task Done ---");
+		System.out.println("--- Toggle Task Done/Not Done ---");
 		printList(tdq.getTodoList());
-		System.out.print("What do you want to mark done? Type q() to Cancel\n> ");
+		System.out.print("What do you want to mark done/not done? Type q() to Cancel\n> ");
 		if (in.hasNext()) {
 			line = in.nextLine();
 			if (!line.contains("q()")) {
 				ID = Integer.parseInt(line);
 				if (tdq.markDone(ID) != -1)
-				  System.out.printf("TASK %d has been marked done!%n", ID);
+				  System.out.printf("TASK %d status has changed!%n", ID);
         else
-          System.out.printf("TASK %d could not be marked done!%n", ID);
+          System.out.printf("TASK %d could not be toggled!%n", ID);
 			}
 		}
 	}
 
 	public static void printMenu() {
-		final String MENU = "=== MENU ===\n" + "1:\tSee Tasks\n" + "2:\tMark Task Done\n" + "3:\tAdd New Task\n"
+		final String MENU = "=== MENU ===\n" + "1:\tSee Tasks\n" + "2:\tToggle Task Done/Not Done\n" + "3:\tAdd New Task\n"
             + "4:\tEdit a Task\n" + "5:\tQuit\n";
 		final String PROMPT = "Please Choose from the Menu:\n>\t";
 

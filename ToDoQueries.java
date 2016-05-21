@@ -111,12 +111,12 @@ public class ToDoQueries {
 			updateTaskByIDFromTodoTable = connection.prepareStatement(sql);
 
 			// create query that marks task as done in the database
-			sql = "UPDATE TODO SET Done = TRUE WHERE ID = ?;";
+			sql = "UPDATE TODO SET Done = NOT Done WHERE ID = ?;";
 			markTaskDoneByIDFromTodoTable = connection.prepareStatement(sql);
 			
 			// create query that marks task as done in the database
-			sql = "UPDATE TODO SET Done = FALSE WHERE ID = ?;";
-			markTaskNotDoneByIDFromTodoTable = connection.prepareStatement(sql);
+//			sql = "UPDATE TODO SET Done = FALSE WHERE ID = ?;";
+//			markTaskNotDoneByIDFromTodoTable = connection.prepareStatement(sql);
 
 			// create query that deletes task from todo GTable
 			sql = "DELETE FROM TODO WHERE ID = ?;";
@@ -349,7 +349,8 @@ public class ToDoQueries {
 	};
 
 	// Mark Done as True in TODO GTable
-
+  // marks done if done
+  // marks not done if not done
 	public int markDone(int ID) {
 		if (ID > getTodoList().size() || ID < 1) {
 			System.out.println("Sorry, that task doesn't exist");
@@ -370,22 +371,22 @@ public class ToDoQueries {
 	}
 	// Mark Not Done in TODO GTable
 
-	public void markNotDone(int ID) {
-		if (ID > getTodoList().size() || ID < 1) {
-			System.out.println("Sorry, that task doesn't exist");
-		}
-		try {
-			markTaskNotDoneByIDFromTodoTable.setInt(1, ID);
-			// Execute the statement
-			markTaskNotDoneByIDFromTodoTable.executeUpdate();
-
-			// update task on list
-			getTodoList().get(ID - 1).markNotDone();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-	}
+//	public void markNotDone(int ID) {
+//		if (ID > getTodoList().size() || ID < 1) {
+//			System.out.println("Sorry, that task doesn't exist");
+//		}
+//		try {
+//			markTaskNotDoneByIDFromTodoTable.setInt(1, ID);
+//			// Execute the statement
+//			markTaskNotDoneByIDFromTodoTable.executeUpdate();
+//
+//			// update task on list
+//			getTodoList().get(ID - 1).markNotDone();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//
+//	}
 	// Delete task from BothTables
 
 	public void deleteTaskfromBothTables(int ID) {

@@ -143,7 +143,7 @@ public class GTable extends JFrame {
 					if (column == 0) {
 						if (dtm.getValueAt(currentRow, 0).equals(true)) {
 							dtm.setValueAt(false, currentRow, 0);
-							tdq.markNotDone(currentRow+1); // marked Not Done by clicking checkbox
+							tdq.markDone(currentRow+1); // marked Not Done by clicking checkbox
 							JOptionPane.showMessageDialog(null, "Task Marked Incomplete", "Done Window",
 									JOptionPane.INFORMATION_MESSAGE);
 						} else {
@@ -218,7 +218,7 @@ public class GTable extends JFrame {
 					if (dtm.getValueAt(currentRow, 0).equals(true)) {
 						dtm.setValueAt(false, currentRow, 0);
 						// Database markNotDone correctly working
-						tdq.markNotDone(currentRow+1);
+						tdq.markDone(currentRow+1);
 					} else {
 						dtm.setValueAt(true, currentRow, 0);
 						// Database markDone correctly working 
