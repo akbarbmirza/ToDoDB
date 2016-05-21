@@ -350,9 +350,10 @@ public class ToDoQueries {
 
 	// Mark Done as True in TODO GTable
 
-	public void markDone(int ID) {
+	public int markDone(int ID) {
 		if (ID > getTodoList().size() || ID < 1) {
 			System.out.println("Sorry, that task doesn't exist");
+      return -1; // error
 		}
 		try {
 			markTaskDoneByIDFromTodoTable.setInt(1, ID);
@@ -363,8 +364,9 @@ public class ToDoQueries {
 			getTodoList().get(ID - 1).markDone();
 		} catch (SQLException e) {
 			e.printStackTrace();
+      return -1; // error
 		}
-
+    return 0; // success
 	}
 	// Mark Not Done in TODO GTable
 

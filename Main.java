@@ -72,8 +72,10 @@ public class Main {
 			line = in.nextLine();
 			if (!line.contains("q()")) {
 				ID = Integer.parseInt(line);
-				tdq.markDone(ID);
-				System.out.printf("TASK %d has been marked done!%n", ID);
+				if (tdq.markDone(ID) != -1)
+				  System.out.printf("TASK %d has been marked done!%n", ID);
+        else
+          System.out.printf("TASK %d could not be marked done!%n", ID);
 			}
 		}
 	}
