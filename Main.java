@@ -1,6 +1,6 @@
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -20,6 +20,7 @@ public class Main {
 			switch (choice) {
 			case 1:
 				// Show Tasks Menu
+        showTasks(tdq);
 				break;
 			case 2:
 				// Mark Task Done
@@ -45,17 +46,24 @@ public class Main {
 		}
 	}
 
+  public static void showTasks(ToDoQueries tdq) {
+    ArrayList<ToDo> list = tdq.getTodoList();
+    System.out.printf("%3s\t%-15s\t%-15s\t%s\t%10s%n", "NUM", "TASK", "CATEGORY", "DONE", "DATE");
+    printList(list);
+    System.out.println();
+  }
+
 	public static void addTask(Scanner in, ToDoQueries tdq) {
 		String task, category, line;
 
 		// Print Instructions for Adding Task
 		System.out.println("--- Add a Task ---");
-		System.out.print("What do you need to do? Type q() to Cancel\n> ");
+		System.out.print("What do you need to do? Type q() to Cancel\n>\t");
 		if (in.hasNext()) {
 			line = in.nextLine();
 			if (!line.contains("q()")) {
 				task = line;
-				System.out.println("What category is this task?\n> ");
+				System.out.println("What category is this task?\n>\t");
 				category = in.nextLine();
 				tdq.addTask(task, category);
 				System.out.printf("Your task '%s' has been added!%n", task);
@@ -69,12 +77,12 @@ public class Main {
 
     // Print Instructions for Editing a Task
     System.out.println("--- Edit a Task ---");
-    System.out.print("What task do you want to edit? Type q() to Cancel\n> ");
+    System.out.print("What task do you want to edit? Type q() to Cancel\n>\t");
     if (in.hasNext()) {
       line = in.nextLine();
       if (!line.contains("q()")) {
         ID = Integer.parseInt(line);
-        System.out.println("What do you want to change the task to?\n> ");
+        System.out.println("What do you want to change the task to?\n>\t");
         task = in.nextLine();
         if (tdq.editTask(ID, task) != -1)
           System.out.printf("Task %d was edited!%n", ID);
@@ -88,8 +96,8 @@ public class Main {
 		String line;
 		int ID;
 		System.out.println("--- Toggle Task Done/Not Done ---");
-		printList(tdq.getTodoList());
-		System.out.print("What do you want to mark done/not done? Type q() to Cancel\n> ");
+//		printList(tdq.getTodoList());
+		System.out.print("What do you want to mark done/not done? Type q() to Cancel\n>\t");
 		if (in.hasNext()) {
 			line = in.nextLine();
 			if (!line.contains("q()")) {
@@ -108,18 +116,16 @@ public class Main {
 		final String PROMPT = "Please Choose from the Menu:\n>\t";
 
 		System.out.println(MENU);
-		System.out.println(PROMPT);
+		System.out.print(PROMPT);
 	}
 
-	public static void printList(List<ToDo> list) {
+	public static void printList(ArrayList<ToDo> list) {
 		for (ToDo item : list) {
 			System.out.println(item);
 		}
 	}
 
 	public static void main(String[] args) {
-
-		System.out.printf("%3s\t%-15s\t%-15s\t%s\t%10s%n", "NUM", "TASK", "CATEGORY", "DONE", "DATE");
 
 		// SAMPLE CODE FROM PROFESSOR
 		// Establish database connection
@@ -147,13 +153,13 @@ public class Main {
 		tdq.addTask("Buy Fruits", "HOME");
 		tdq.addTask("Pay Phone Bill", "PERSONAL");
 
-		List<ToDo> myList1 = tdq.getTodoList();
+//		List<ToDo> myList1 = tdq.getTodoList();
 
 		GTable gui = new GTable(tdq);
 		gui.runTable();
 
 		while (true) {
-			printList(myList1);
+//			printList(myList1);
 			printMenu();
 			handleInput(tdq);
 		}
