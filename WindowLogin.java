@@ -139,6 +139,10 @@ public class WindowLogin extends JFrame{
 			addMouseListener(listen);
 		}
 	}
+
+	public String getUsername() {
+		return userNameField.getText();
+	}
 	
 	public static void main(String[] args) {
 		try{

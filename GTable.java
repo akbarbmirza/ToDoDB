@@ -34,7 +34,7 @@ public class GTable extends JFrame {
 	// DataBase Connection Class
 	private ToDoQueries tdq;
 
-	String[] columnNames = { "[  ]", "Task", "Category", "Date" };
+	String[] columnNames = { "[  ]", "Task", "Category", "Date", "ID", "USER" };
 	Object[][] data = {
 			// {true, "Homework Assignment", "School", "06-05-2016"},
 			// {true, "Doctor's Appointment", "Doctor","06-05-2016"},
@@ -89,7 +89,9 @@ public class GTable extends JFrame {
 					// Run the program
 					GTable frame = new GTable(tdq);
 					frame.setVisible(true);
-					frame.setTitle("ToDo List");
+          WindowLogin login = new WindowLogin();
+          String username = login.getUsername();
+          frame.setTitle(username + "'s ToDo List");
 
 					// Object[][] newData = {
 					// {true, "hello","hi","wow"},
@@ -242,9 +244,14 @@ public class GTable extends JFrame {
 		table.getColumnModel().getColumn(1).setPreferredWidth(200);
 		table.getColumnModel().getColumn(2).setPreferredWidth(50);
 		table.getColumnModel().getColumn(3).setPreferredWidth(50);
+    table.getColumnModel().getColumn(4).setPreferredWidth(0);
+    table.getColumnModel().getColumn(5).setPreferredWidth(0);
+    table.getColumnModel().getColumn(5).setMaxWidth(0);
+    table.getColumnModel().getColumn(4).setMaxWidth(0);
+    table.removeColumn(table.getColumnModel().getColumn(5));
+    table.removeColumn(table.getColumnModel().getColumn(4));
 		table.setForeground(Color.orange);
 		table.setBackground(Color.GRAY);
-		table.setAutoCreateRowSorter(true);
 	}
 
 	public void addTaskGui() {
