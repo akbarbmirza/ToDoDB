@@ -143,12 +143,12 @@ public class GTable extends JFrame {
 					if (column == 0) {
 						if (dtm.getValueAt(currentRow, 0).equals(true)) {
 							dtm.setValueAt(false, currentRow, 0);
-							tdq.markNotDone(currentRow+1); // 
+							tdq.markNotDone(currentRow+1); // marked Not Done by clicking checkbox
 							JOptionPane.showMessageDialog(null, "Task Marked Incomplete", "Done Window",
 									JOptionPane.INFORMATION_MESSAGE);
 						} else {
 							dtm.setValueAt(true, currentRow, 0);
-							tdq.markDone(currentRow+1); //
+							tdq.markDone(currentRow+1); // marked Done by clicking checkbox
 							JOptionPane.showMessageDialog(null, "Task Marked Done", "Done Window",
 									JOptionPane.INFORMATION_MESSAGE);
 						}
@@ -179,7 +179,7 @@ public class GTable extends JFrame {
 					JOptionPane.showMessageDialog(null, "No Task Selected", "Delete Message",
 							JOptionPane.WARNING_MESSAGE);
 				} else {
-					tdq.deleteTaskfromBothTables(currentRow);
+//					tdq.deleteTaskfromBothTables(currentRow);
 					dtm.removeRow(currentRow);
 					JOptionPane.showMessageDialog(null, "Task Deleted", "Delete Message",
 							JOptionPane.INFORMATION_MESSAGE);
@@ -217,11 +217,11 @@ public class GTable extends JFrame {
 					int currentRow = table.convertRowIndexToModel(table.getSelectedRow());
 					if (dtm.getValueAt(currentRow, 0).equals(true)) {
 						dtm.setValueAt(false, currentRow, 0);
-						// Update Done in Database - markNotDone
+						// Database markNotDone correctly working
 						tdq.markNotDone(currentRow+1);
 					} else {
 						dtm.setValueAt(true, currentRow, 0);
-						// Update Done in Database - markDone
+						// Database markDone correctly working 
 						tdq.markDone(currentRow+1);
 					}
 				} else
@@ -364,8 +364,8 @@ public class GTable extends JFrame {
 					dtm.setValueAt(textField.getText(), currentRow, 1);
 					dtm.setValueAt(textField_1.getText(), currentRow, 2);
 					// TODO: Edit Task in Database
-					ToDo toEdit = tdq.getTaskByIDFromTodoTable(currentRow);
-					tdq.editTask(toEdit, textField_1.getText());
+//					ToDo toEdit = tdq.getTaskByIDFromTodoTable(currentRow);
+//					tdq.editTask(toEdit, textField_1.getText());
 					frameEdit.dispose();
 				}
 
