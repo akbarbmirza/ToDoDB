@@ -162,6 +162,8 @@ public class Main {
 //			printList(myList1);
 			printMenu();
 			handleInput(tdq);
+			gui.runTable();
+			
 		}
 
 		// GTable gui = new GTable();
