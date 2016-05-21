@@ -1,0 +1,4 @@
+*.class
+testdb,sa,.properties
+*.script
+*.properties
