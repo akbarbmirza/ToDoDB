@@ -95,11 +95,7 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		// ToDo myTask = new ToDo("Save the World!");
 		System.out.printf("%3s\t%-15s\t%-15s\t%s\t%10s%n", "NUM", "TASK", "CATEGORY", "DONE", "DATE");
-		// System.out.println(myTask);
-		// myTask.markDone();
-		// System.out.println(myTask);
 
 		// SAMPLE CODE FROM PROFESSOR
 		// Establish database connection
@@ -137,12 +133,6 @@ public class Main {
 			printMenu();
 			handleInput(tdq);
 		}
-
-		// List<ToDo> myList = tdq.getAllTasksFromTodoTable();
-		// printList(myList);
-
-		// List<ToDo> myList1 = tdq.getAllTasksFromCategoriesTable();
-		// printList(myList1);
 
 		// GTable gui = new GTable();
 		// gui.runTable();
