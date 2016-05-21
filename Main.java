@@ -96,7 +96,7 @@ public class Main {
 		String line;
 		int ID;
 		System.out.println("--- Toggle Task Done/Not Done ---");
-//		printList(tdq.getTodoList());
+		printList(tdq.getTodoList());
 		System.out.print("What do you want to mark done/not done? Type q() to Cancel\n>\t");
 		if (in.hasNext()) {
 			line = in.nextLine();
