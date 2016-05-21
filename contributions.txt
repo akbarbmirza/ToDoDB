@@ -1,0 +1,8 @@
+Contributions:
+
+Akbar Mirza - ToDo Class, ToDo Queries, Prepared Statements for ToDo List, Console Interface & Input Handling, Console Display, Comments on Main & ToDo Queries, Connecting ToDoList to GUI
+Aziz - ToDo, ToDo Queries (Implementing Categories), SQL Commands, AddTasks ToDo List
+Asif -
+Ichwan -
+Muhammad Rehman - GUI Code for GTable
+Md -
