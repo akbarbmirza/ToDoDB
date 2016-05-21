@@ -4,399 +4,408 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Based on Fig. 24.31: PersonQueries.java
- * PreparedStatements used by the ToDo Application.
+ * Based on Fig. 24.31: PersonQueries.java PreparedStatements used by the ToDo
+ * Application.
  */
-
 
 public class ToDoQueries {
 
-  //===========================================================================
-  // FIELDS
-  //===========================================================================
+	// ===========================================================================
+	// FIELDS
+	// ===========================================================================
 
-  private static final String URL = "jdbc:hsqldb:testdb";
-  private static final String USERNAME = "sa";
-  private static final String PASSWORD = "";
-  private final ArrayList<ToDo> todoList = new ArrayList<ToDo>();
+	private static final String URL = "jdbc:hsqldb:testdb";
+	private static final String USERNAME = "sa";
+	private static final String PASSWORD = "";
+	private final ArrayList<ToDo> todoList = new ArrayList<ToDo>();
 
-  private Connection connection; // manages connection
-  
-  //Sql Statements For TODO GTable
-  private PreparedStatement selectAllTasksFromTodoTable;
-  // TODO: Write Prepared Statement for picking one item
-  private PreparedStatement selectTaskByIDFromTodoTable;
-  private PreparedStatement insertNewTaskToTodoTable;
-  // TODO: Write Prepared Statement for editing one item
-  private PreparedStatement updateTaskByIDFromTodoTable;
+	private Connection connection; // manages connection
 
-  // Aziz - Tasks
-  // - marking an item done - execute sql, and write function
-  // TODO: Write Prepared Statement for marking an item done
-  private PreparedStatement markTaskDoneByIDFromTodoTable;
-  // - deleting an item, removing it from sql database
-  // - creating a User class w/ username, password, tasks array that holds ids of tasks they own
-  // TODO: Write Prepared Statement for deleting one item
-  private PreparedStatement deleteTaskByIDFromTodoTable;
-  
+	// Sql Statements For TODO GTable
+	private PreparedStatement selectAllTasksFromTodoTable;
+	// TODO: Write Prepared Statement for picking one item
+	private PreparedStatement selectTaskByIDFromTodoTable;
+	private PreparedStatement insertNewTaskToTodoTable;
+	// TODO: Write Prepared Statement for editing one item
+	private PreparedStatement updateTaskByIDFromTodoTable;
 
+	// Aziz - Tasks
+	// - marking an item done - execute sql, and write function
+	// TODO: Write Prepared Statement for marking an item done
+	private PreparedStatement markTaskDoneByIDFromTodoTable;
+	private PreparedStatement markTaskNotDoneByIDFromTodoTable;
+	// - deleting an item, removing it from sql database
+	// - creating a User class w/ username, password, tasks array that holds ids
+	// of tasks they own
+	// TODO: Write Prepared Statement for deleting one item
+	private PreparedStatement deleteTaskByIDFromTodoTable;
 
-  //Sql Statements For CATEGORIES GTable
-  private PreparedStatement selectAllTasksFromCategoriesTable;
-  private PreparedStatement selectTaskByIDFromCategoriesTable;
-  private PreparedStatement insertNewTaskToCategoriesTable;
-  private PreparedStatement getDeleteTaskByIDFromCategoriesTable;
-  private PreparedStatement deleteTaskByIDFromCategoriesTable;
-  
-  // See all columns together
-  private PreparedStatement selectAllTasks;
+	// Sql Statements For CATEGORIES GTable
+	private PreparedStatement selectAllTasksFromCategoriesTable;
+	private PreparedStatement selectTaskByIDFromCategoriesTable;
+	private PreparedStatement insertNewTaskToCategoriesTable;
+	private PreparedStatement getDeleteTaskByIDFromCategoriesTable;
+	private PreparedStatement deleteTaskByIDFromCategoriesTable;
 
-  //===========================================================================
-  // CONSTRUCTOR
-  //===========================================================================
+	// See all columns together
+	private PreparedStatement selectAllTasks;
 
-  public ToDoQueries() {
-    try {
-      Class.forName("org.hsqldb.jdbcDriver");
-      connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+	// ===========================================================================
+	// CONSTRUCTOR
+	// ===========================================================================
 
-      Statement s;
-      String sql;
-      ResultSet rs;
+	public ToDoQueries() {
+		try {
+			Class.forName("org.hsqldb.jdbcDriver");
+			connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
-      // DROP TODO TABLE
-      sql = "DROP TABLE TODO;";
-      try {
-        s = connection.createStatement();
-        rs = s.executeQuery(sql);
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
+			Statement s;
+			String sql;
+			ResultSet rs;
 
-      // DROP CATEGORIES TABLE
-      sql = "DROP TABLE CATEGORIES;";
-      try {
-        s = connection.createStatement();
-        rs = s.executeQuery(sql);
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
+			// DROP TODO TABLE
+			sql = "DROP TABLE TODO;";
+			try {
+				s = connection.createStatement();
+				rs = s.executeQuery(sql);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 
- 
-      //************************* TODO GTable ********************************
-      
-      // CREATE TODO TABLE
-      sql = "CREATE TABLE TODO(ID INT, Task VARCHAR(255), Done BOOLEAN NOT NULL, Date DATE );";
-      
-      try {
-    	  s = connection.createStatement();
-    	  rs = s.executeQuery(sql);
-      } 
-      catch (SQLException e) {
-    	  e.printStackTrace();
-      }
+			// DROP CATEGORIES TABLE
+			sql = "DROP TABLE CATEGORIES;";
+			try {
+				s = connection.createStatement();
+				rs = s.executeQuery(sql);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 
-      // create query that selects all entries from the TODO GTable
-      sql = "SELECT * FROM TODO;";
-      selectAllTasksFromTodoTable = connection.prepareStatement(sql);
+			// ************************* TODO GTable
+			// ********************************
 
-      // create query that selects entries with a specific ID
-      sql = "SELECT * FROM TODO WHERE ID = ?;";
-      selectTaskByIDFromTodoTable = connection.prepareStatement(sql);
+			// CREATE TODO TABLE
+			sql = "CREATE TABLE TODO(ID INT, Task VARCHAR(255), Done BOOLEAN NOT NULL, Date DATE );";
 
-      // create insert that adds a new task into the database
-      sql = "INSERT INTO TODO (ID, Task, Done, Date) VALUES (?, ?, ?, ?);";
-      insertNewTaskToTodoTable = connection.prepareStatement(sql);
+			try {
+				s = connection.createStatement();
+				rs = s.executeQuery(sql);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 
-      // create query that updates the given task in the database
-      sql = "UPDATE TODO SET Task = ? WHERE ID = ?;";
-      updateTaskByIDFromTodoTable = connection.prepareStatement(sql);
+			// create query that selects all entries from the TODO GTable
+			sql = "SELECT * FROM TODO;";
+			selectAllTasksFromTodoTable = connection.prepareStatement(sql);
 
-      // create query that marks task as done in the database
-      sql = "UPDATE TODO SET Done = TRUE WHERE ID = ?;";
-      markTaskDoneByIDFromTodoTable = connection.prepareStatement(sql);
-      
-      // create query that deletes task from todo GTable
-      sql = "DELETE FROM TODO WHERE ID = ?;";
-      deleteTaskByIDFromTodoTable = connection.prepareStatement(sql);
-      
-//      // create query that deletes task from categories GTable
-//      sql = "DELETE FROM CATEGORIES WHERE ID = ?;";
-//      deleteTaskByIDFromCategoriesTable = connection.prepareStatement(sql);
-      
-      
-      
-      
+			// create query that selects entries with a specific ID
+			sql = "SELECT * FROM TODO WHERE ID = ?;";
+			selectTaskByIDFromTodoTable = connection.prepareStatement(sql);
 
-      
-  // ******************* CATEGORIES TABLE ************************************** 
+			// create insert that adds a new task into the database
+			sql = "INSERT INTO TODO (ID, Task, Done, Date) VALUES (?, ?, ?, ?);";
+			insertNewTaskToTodoTable = connection.prepareStatement(sql);
 
-      // CREATE SECOND TABLE
-      sql = "CREATE TABLE CATEGORIES (ID INT, Category VARCHAR(255));";
-      try {
-        s = connection.createStatement();
-        rs = s.executeQuery(sql);
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
+			// create query that updates the given task in the database
+			sql = "UPDATE TODO SET Task = ? WHERE ID = ?;";
+			updateTaskByIDFromTodoTable = connection.prepareStatement(sql);
 
-      // create query that selects all entries from the CATEGORIES GTable
-      sql = "SELECT TODO.ID, TODO.Task, CATEGORIES.Category, TODO.Done, TODO.Date FROM TODO INNER JOIN CATEGORIES ON " +
-              "TODO.ID=CATEGORIES.ID;";
-      selectAllTasks = connection.prepareStatement(sql);
+			// create query that marks task as done in the database
+			sql = "UPDATE TODO SET Done = TRUE WHERE ID = ?;";
+			markTaskDoneByIDFromTodoTable = connection.prepareStatement(sql);
+			
+			// create query that marks task as done in the database
+			sql = "UPDATE TODO SET Done = FALSE WHERE ID = ?;";
+			markTaskNotDoneByIDFromTodoTable = connection.prepareStatement(sql);
 
-      sql = "SELECT * FROM CATEGORIES;";
-      selectAllTasksFromCategoriesTable = connection.prepareStatement(sql);
+			// create query that deletes task from todo GTable
+			sql = "DELETE FROM TODO WHERE ID = ?;";
+			deleteTaskByIDFromTodoTable = connection.prepareStatement(sql);
 
-      // create query that selects entries with a specific ID
-      sql = "SELECT * FROM CATEGORIES WHERE ID = ?;";
-      selectTaskByIDFromCategoriesTable = connection.prepareStatement(sql);
+			// // create query that deletes task from categories GTable
+			// sql = "DELETE FROM CATEGORIES WHERE ID = ?;";
+			// deleteTaskByIDFromCategoriesTable =
+			// connection.prepareStatement(sql);
 
-      // create insert that adds a new task into the database
-      sql = "INSERT INTO CATEGORIES (ID, Category) VALUES (?, ?);";
-      insertNewTaskToCategoriesTable = connection.prepareStatement(sql);
+			// ******************* CATEGORIES TABLE
+			// **************************************
 
+			// CREATE SECOND TABLE
+			sql = "CREATE TABLE CATEGORIES (ID INT, Category VARCHAR(255));";
+			try {
+				s = connection.createStatement();
+				rs = s.executeQuery(sql);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 
-    } catch (SQLException e) {
-      e.printStackTrace();
-      System.exit(1);
-    } catch (ClassNotFoundException e) {
-      e.printStackTrace();
-    }
-    
-  }
+			// create query that selects all entries from the CATEGORIES GTable
+			sql = "SELECT TODO.ID, TODO.Task, CATEGORIES.Category, TODO.Done, TODO.Date FROM TODO INNER JOIN CATEGORIES ON "
+					+ "TODO.ID=CATEGORIES.ID;";
+			selectAllTasks = connection.prepareStatement(sql);
 
-  //===========================================================================
-  // METHODS
-  //===========================================================================
-  // GETTERS
-  //---------------------------------------------------------------------------
+			sql = "SELECT * FROM CATEGORIES;";
+			selectAllTasksFromCategoriesTable = connection.prepareStatement(sql);
 
-  public ToDo getTaskByIDFromTodoTable(int ID) {
-    ToDo results = null;
-    ResultSet resultSet = null;
-    try {
-      resultSet = selectTaskByIDFromTodoTable.executeQuery();
-      while (resultSet.next()) {
-        results = new ToDo(resultSet.getString("Task"), null);
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-    } finally {
-      try {
-        resultSet.close();
-      } catch (SQLException e) {
-        e.printStackTrace();
-        close();
-      }
-    }
+			// create query that selects entries with a specific ID
+			sql = "SELECT * FROM CATEGORIES WHERE ID = ?;";
+			selectTaskByIDFromCategoriesTable = connection.prepareStatement(sql);
 
-    return results;
-  }
+			// create insert that adds a new task into the database
+			sql = "INSERT INTO CATEGORIES (ID, Category) VALUES (?, ?);";
+			insertNewTaskToCategoriesTable = connection.prepareStatement(sql);
 
-  // select all of the tasks in the database
-  public ArrayList<ToDo> getAllTasksFromTodoTable() {
-    ArrayList<ToDo> results = null;
-    ResultSet resultSet = null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.exit(1);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 
-    try {
-      // executeQuery returns ResultSet containing matching entries
-      resultSet = selectAllTasksFromTodoTable.executeQuery();
-      results = new ArrayList<ToDo>();
+	}
 
-      while (resultSet.next()) {
-        results.add(
-                new ToDo(resultSet.getString("Task"), null)
-        );
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-    } finally {
-      try {
-        resultSet.close();
-      } catch (SQLException e) {
-        e.printStackTrace();
-        close();
-      }
-    }
+	// ===========================================================================
+	// METHODS
+	// ===========================================================================
+	// GETTERS
+	// ---------------------------------------------------------------------------
 
-    return results;
-  }
+	public ToDo getTaskByIDFromTodoTable(int ID) {
+		ToDo results = null;
+		ResultSet resultSet = null;
+		try {
+			resultSet = selectTaskByIDFromTodoTable.executeQuery();
+			while (resultSet.next()) {
+				results = new ToDo(resultSet.getString("Task"), null);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				resultSet.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				close();
+			}
+		}
 
-  // FOR CATEGORIES TABLE
-  
-  public List<ToDo> getAllTasksFromCategoriesTable() {
-	    List<ToDo> results = null;
-	    ResultSet resultSet = null;
+		return results;
+	}
 
-	    try {
-	      // executeQuery returns ResultSet containing matching entries
-	      resultSet = selectAllTasksFromCategoriesTable.executeQuery();
-	      results = new ArrayList<ToDo>();
+	// select all of the tasks in the database
+	public ArrayList<ToDo> getAllTasksFromTodoTable() {
+		ArrayList<ToDo> results = null;
+		ResultSet resultSet = null;
 
-	      while (resultSet.next()) {
-	        results.add(
-	        		new ToDo(resultSet.getString("ID"), resultSet.getString("Category"))
-	        );
-	    	  
-	      }
-	    } catch (SQLException e) {
-	      e.printStackTrace();
-	    } finally {
-	      try {
-	        resultSet.close();
-	      } catch (SQLException e) {
-	        e.printStackTrace();
-	        close();
-	      }
-	    }
+		try {
+			// executeQuery returns ResultSet containing matching entries
+			resultSet = selectAllTasksFromTodoTable.executeQuery();
+			results = new ArrayList<ToDo>();
 
-	    return results;
-	  }
-  
-  // For inner joinof both of the tables
-  
-  public List<ToDo> getAllTasks() {
-	    List<ToDo> results = null;
-	    ResultSet resultSet = null;
+			while (resultSet.next()) {
+				results.add(new ToDo(resultSet.getString("Task"), null));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				resultSet.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				close();
+			}
+		}
 
-	    try {
-	      // executeQuery returns ResultSet containing matching entries
-	      resultSet = selectAllTasks.executeQuery();
-	      results = new ArrayList<ToDo>();
+		return results;
+	}
 
-	      while (resultSet.next()) {
-	        results.add(
-	        		new ToDo(resultSet.getInt("ID"), resultSet.getString("Task"), resultSet.getString("Category"))
-	        );
-	    	  
-	      }
-	    } catch (SQLException e) {
-	      e.printStackTrace();
-	    } finally {
-	      try {
-	        resultSet.close();
-	      } catch (SQLException e) {
-	        e.printStackTrace();
-	        close();
-	      }
-	    }
+	// FOR CATEGORIES TABLE
 
-	    return results;
-	  }
+	public List<ToDo> getAllTasksFromCategoriesTable() {
+		List<ToDo> results = null;
+		ResultSet resultSet = null;
 
-  public ArrayList<ToDo> getTodoList() {
-    return todoList;
-  }
-  
-  //---------------------------------------------------------------------------
-  // SETTERS
-  //---------------------------------------------------------------------------
+		try {
+			// executeQuery returns ResultSet containing matching entries
+			resultSet = selectAllTasksFromCategoriesTable.executeQuery();
+			results = new ArrayList<ToDo>();
 
-  private void addToTodos(ToDo toAdd) {
-    this.todoList.add(toAdd);
-  }
+			while (resultSet.next()) {
+				results.add(new ToDo(resultSet.getString("ID"), resultSet.getString("Category")));
 
-  private void updateTodo(ToDo toUpdate) {
-    this.todoList.set(toUpdate.getID() - 1, toUpdate);
-  }
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				resultSet.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				close();
+			}
+		}
 
-  //---------------------------------------------------------------------------
-  // OTHER METHODS
-  //---------------------------------------------------------------------------
+		return results;
+	}
 
-  // add a task
-  // TODO: make this function a void function
-  public void addTask(String desc, String category) {
-    int result = 0;
+	// For inner joinof both of the tables
 
-    // set parameters, then execute insertNewTask
-    try {
-      ToDo newTask = new ToDo(desc,category);
-      insertNewTaskToTodoTable.setInt(1, newTask.getID());
-      insertNewTaskToTodoTable.setString(2, newTask.getTask());
-      insertNewTaskToTodoTable.setBoolean(3, newTask.isTaskDone());
-      insertNewTaskToTodoTable.setDate(4, newTask.getDateAdded());
-     
-      // ADD TO CATEGORIES TABLE TOO
-      insertNewTaskToCategoriesTable.setInt(1, newTask.getID());
-      insertNewTaskToCategoriesTable.setString(2, newTask.getCategory());
+	public List<ToDo> getAllTasks() {
+		List<ToDo> results = null;
+		ResultSet resultSet = null;
 
-      // insert the new entry; returns @ of rows updated
-      result = insertNewTaskToTodoTable.executeUpdate();
-      insertNewTaskToCategoriesTable.executeUpdate();
+		try {
+			// executeQuery returns ResultSet containing matching entries
+			resultSet = selectAllTasks.executeQuery();
+			results = new ArrayList<ToDo>();
 
-      // add to our todoList
-      addToTodos(newTask);
-    } catch (SQLException e) {
-      e.printStackTrace();
-      close();
-    }
+			while (resultSet.next()) {
+				results.add(
+						new ToDo(resultSet.getInt("ID"), resultSet.getString("Task"), resultSet.getString("Category")));
 
-    // return result;
-  }
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				resultSet.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				close();
+			}
+		}
 
-  public void editTask(ToDo toEdit, String newDesc) {
-    try {
-      // Update Category on our TD object
-      toEdit.editTask(newDesc);
+		return results;
+	}
 
-      // Initialize our Prepared Statement
-      updateTaskByIDFromTodoTable.setString(1, newDesc);
-      updateTaskByIDFromTodoTable.setInt(2, toEdit.getID());
+	public ArrayList<ToDo> getTodoList() {
+		return todoList;
+	}
 
-      // Execute our statement
-      updateTaskByIDFromTodoTable.executeUpdate();
+	// ---------------------------------------------------------------------------
+	// SETTERS
+	// ---------------------------------------------------------------------------
 
-      // Update our todoList
-      updateTodo(toEdit);
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-  };
+	private void addToTodos(ToDo toAdd) {
+		this.todoList.add(toAdd);
+	}
 
-  
- // Mark Done as True in TODO GTable
-  
-  public void markDone(int ID) {
-    if (ID > getTodoList().size() || ID < 1) {
-      System.out.println("Sorry, that task doesn't exist");
-    }
-	 try {
-		 markTaskDoneByIDFromTodoTable.setInt(1,ID);
-		 // Execute the statement
-		 markTaskDoneByIDFromTodoTable.executeUpdate();
+	private void updateTodo(ToDo toUpdate) {
+		this.todoList.set(toUpdate.getID() - 1, toUpdate);
+	}
 
-     // update task on list
-     getTodoList().get(ID - 1).markDone();
-	 } catch (SQLException e) {
-		      e.printStackTrace();
-		    }
-	  
-  }
-  
-  // Delete task from BothTables
-  
-  public void deleteTaskfromBothTables(int ID) {
-	  try {
-		  deleteTaskByIDFromTodoTable.setInt(1, ID);
-		  deleteTaskByIDFromCategoriesTable.setInt(1,ID);
-		  
-		  // Execute the statements
-		  deleteTaskByIDFromTodoTable.executeUpdate();
-		  deleteTaskByIDFromCategoriesTable.executeUpdate();
-		  
-	  }	catch (SQLException e) {
-	      e.printStackTrace();
-	    }
-  }
+	// ---------------------------------------------------------------------------
+	// OTHER METHODS
+	// ---------------------------------------------------------------------------
 
-  // close the database connection
-  public void close() {
-    try {
-      connection.close();
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-  }
+	// add a task
+	// TODO: make this function a void function
+	public void addTask(String desc, String category) {
+		int result = 0;
+
+		// set parameters, then execute insertNewTask
+		try {
+			ToDo newTask = new ToDo(desc, category);
+			insertNewTaskToTodoTable.setInt(1, newTask.getID());
+			insertNewTaskToTodoTable.setString(2, newTask.getTask());
+			insertNewTaskToTodoTable.setBoolean(3, newTask.isTaskDone());
+			insertNewTaskToTodoTable.setDate(4, newTask.getDateAdded());
+
+			// ADD TO CATEGORIES TABLE TOO
+			insertNewTaskToCategoriesTable.setInt(1, newTask.getID());
+			insertNewTaskToCategoriesTable.setString(2, newTask.getCategory());
+
+			// insert the new entry; returns @ of rows updated
+			result = insertNewTaskToTodoTable.executeUpdate();
+			insertNewTaskToCategoriesTable.executeUpdate();
+
+			// add to our todoList
+			addToTodos(newTask);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			close();
+		}
+
+		// return result;
+	}
+
+	public void editTask(ToDo toEdit, String newDesc) {
+		try {
+			// Update Category on our TD object
+			toEdit.editTask(newDesc);
+
+			// Initialize our Prepared Statement
+			updateTaskByIDFromTodoTable.setString(1, newDesc);
+			updateTaskByIDFromTodoTable.setInt(2, toEdit.getID());
+
+			// Execute our statement
+			updateTaskByIDFromTodoTable.executeUpdate();
+
+			// Update our todoList
+			updateTodo(toEdit);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	};
+
+	// Mark Done as True in TODO GTable
+
+	public void markDone(int ID) {
+		if (ID > getTodoList().size() || ID < 1) {
+			System.out.println("Sorry, that task doesn't exist");
+		}
+		try {
+			markTaskDoneByIDFromTodoTable.setInt(1, ID);
+			// Execute the statement
+			markTaskDoneByIDFromTodoTable.executeUpdate();
+
+			// update task on list
+			getTodoList().get(ID - 1).markDone();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+	// Mark Not Done in TODO GTable
+
+	public void markNotDone(int ID) {
+		if (ID > getTodoList().size() || ID < 1) {
+			System.out.println("Sorry, that task doesn't exist");
+		}
+		try {
+			markTaskNotDoneByIDFromTodoTable.setInt(1, ID);
+			// Execute the statement
+			markTaskNotDoneByIDFromTodoTable.executeUpdate();
+
+			// update task on list
+			getTodoList().get(ID - 1).markNotDone();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+	// Delete task from BothTables
+
+	public void deleteTaskfromBothTables(int ID) {
+		try {
+			deleteTaskByIDFromTodoTable.setInt(1, ID);
+			deleteTaskByIDFromCategoriesTable.setInt(1, ID);
+
+			// Execute the statements
+			deleteTaskByIDFromTodoTable.executeUpdate();
+			deleteTaskByIDFromCategoriesTable.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// close the database connection
+	public void close() {
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 } // end class ToDoQueries

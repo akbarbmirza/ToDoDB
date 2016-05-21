@@ -1,114 +1,112 @@
 public class ToDo {
 
-  //===========================================================================
-  // FIELDS
-  //===========================================================================
-  private static int taskCount = 0;
-  private int ID;
-  private String taskDesc;
-  private boolean isDone;
-  private java.sql.Date dateAdded;
-  private String category;
+	// ===========================================================================
+	// FIELDS
+	// ===========================================================================
+	private static int taskCount = 0;
+	private int ID;
+	private String taskDesc;
+	private boolean isDone;
+	private java.sql.Date dateAdded;
+	private String category;
 
-  //===========================================================================
-  // CONSTRUCTOR
-  //===========================================================================
+	// ===========================================================================
+	// CONSTRUCTOR
+	// ===========================================================================
 
-  ToDo(String desc, String category) {
-    // Initialize our fields
-    this.ID = ++taskCount;
-    this.taskDesc = desc;
-    this.isDone = false;
-    this.dateAdded = new java.sql.Date(new java.util.Date().getTime());
-    if ( category == null) {
-    	this.category = "N/A";
-    }
-    else {
-    	this.category = category;
-    }
-    
-  }
+	ToDo(String desc, String category) {
+		// Initialize our fields
+		this.ID = ++taskCount;
+		this.taskDesc = desc;
+		this.isDone = false;
+		this.dateAdded = new java.sql.Date(new java.util.Date().getTime());
+		if (category == null) {
+			this.category = "N/A";
+		} else {
+			this.category = category;
+		}
 
-  ToDo(int ID, String desc, String category) {
-    // Initialize Fields
-    this.ID = ID;
-    this.taskDesc = desc;
-    this.isDone = false;
-    this.dateAdded = new java.sql.Date(new java.util.Date().getTime());
-    if (category == null) {
-      this.category = "N/A";
-    } else {
-      this.category = category;
-    }
+	}
 
-  }
+	ToDo(int ID, String desc, String category) {
+		// Initialize Fields
+		this.ID = ID;
+		this.taskDesc = desc;
+		this.isDone = false;
+		this.dateAdded = new java.sql.Date(new java.util.Date().getTime());
+		if (category == null) {
+			this.category = "N/A";
+		} else {
+			this.category = category;
+		}
 
-  //===========================================================================
-  // METHODS
-  //===========================================================================
-  // GETTERS
-  //---------------------------------------------------------------------------
+	}
 
-  public int getID() {
-    return this.ID;
-  }
+	// ===========================================================================
+	// METHODS
+	// ===========================================================================
+	// GETTERS
+	// ---------------------------------------------------------------------------
 
-  public String getTask() {
-    return this.taskDesc;
-  }
+	public int getID() {
+		return this.ID;
+	}
 
-  public boolean isTaskDone() {
-    return this.isDone;
-  }
+	public String getTask() {
+		return this.taskDesc;
+	}
 
-  public java.sql.Date getDateAdded() {
-    return this.dateAdded;
-  }
-  
-  public String getCategory() {
-	  return this.category;
-  }
+	public boolean isTaskDone() {
+		return this.isDone;
+	}
 
-  //---------------------------------------------------------------------------
-  // SETTERS
-  //---------------------------------------------------------------------------
+	public java.sql.Date getDateAdded() {
+		return this.dateAdded;
+	}
 
-  public void editTask(String newDesc) {
-    this.taskDesc = newDesc;
-  }
-  
-  private void editCategory(String newCategory)
-  {
-	  this.category = newCategory;
-  }
+	public String getCategory() {
+		return this.category;
+	}
 
-  public void markDone() {
-    this.isDone = true;
-  }
+	// ---------------------------------------------------------------------------
+	// SETTERS
+	// ---------------------------------------------------------------------------
 
-  private void markNotDone() {
-    this.isDone = false;
-  }
+	public void editTask(String newDesc) {
+		this.taskDesc = newDesc;
+	}
 
-//  public void setDateAdded(int year, int month, int date) {
-//    this.dateAdded = new Date();
-//  }
+	private void editCategory(String newCategory) {
+		this.category = newCategory;
+	}
 
-  //---------------------------------------------------------------------------
-  // OTHER METHODS
-  //---------------------------------------------------------------------------
+	public void markDone() {
+		this.isDone = true;
+	}
 
-  private String doneEmoji() {
-    if (this.isTaskDone()) {
-      return "[✔]";
-    }
-    return "[ ]";
-  }
+	public void markNotDone() {
+		this.isDone = false;
+	}
 
-  @Override
-  public String toString() {
-    return String.format("%3s\t%-15s\t%-15s\t%-10s\t%10s", this.getID(), this.getTask(), this.getCategory(), this
-            .doneEmoji(), this.getDateAdded());
-  }
+	// public void setDateAdded(int year, int month, int date) {
+	// this.dateAdded = new Date();
+	// }
+
+	// ---------------------------------------------------------------------------
+	// OTHER METHODS
+	// ---------------------------------------------------------------------------
+
+	private String doneEmoji() {
+		if (this.isTaskDone()) {
+			return "[✔]";
+		}
+		return "[ ]";
+	}
+
+	@Override
+	public String toString() {
+		return String.format("%3s\t%-15s\t%-15s\t%-10s\t%10s", this.getID(), this.getTask(), this.getCategory(),
+				this.doneEmoji(), this.getDateAdded());
+	}
 
 }
