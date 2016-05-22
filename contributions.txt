@@ -4,6 +4,6 @@ Akbar Mirza - ToDo Class, ToDoQueries (used as SQL Template), Prepared Statement
 Aziz - ToDo, ToDo Queries (Implementing Categories), SQL Commands, AddTasks ToDo List
 Asif -
 Ichwan - Commented the Main.java class 
-Muhammad Rehman - GUI Code for GTable
+Muhammad Rehman - GUI. Wrote code for GTable constructor GTable(),addData(), clearTable() and instance variables, worked on addTaskGUI() and editTaskGUI(). Created the table, buttons and made them functional. Wrote code for clicking and button actions on the GUI. Wrote general comments on the GUI class. 
 Md - GUI Code for Add & Edit Windows
 Jonathan Rozario - Edit Task Button, Add Task Button, Done Button, checkbox in GUI connected with Database. Function comments in GTable.java for buttons linked with database. Worked on editTask and addTask dialog windows sizing issues. 
