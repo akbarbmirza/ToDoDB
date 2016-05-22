@@ -6,3 +6,4 @@ Asif -
 Ichwan - Commented the Main.java class 
 Muhammad Rehman - GUI Code for GTable
 Md - GUI Code for Add & Edit Windows
+Jonathan Rozario - Edit Task Button, Add Task Button, Done Button, checkbox in GUI connected with Database. Function comments in GTable.java for buttons linked with database. Worked on editTask and addTask dialog windows sizing issues. 
