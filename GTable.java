@@ -72,7 +72,6 @@ public class GTable extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-
 					// Run the program
 					GTable frame = new GTable(tdq);
 					frame.setVisible(true);
@@ -88,7 +87,7 @@ public class GTable extends JFrame {
 			}
 		});
 	}
-
+	
 	public GTable(final ToDoQueries tdq) {
 		// set the ToDo queries
 		this.tdq = tdq;
@@ -127,14 +126,14 @@ public class GTable extends JFrame {
 							dtm.setValueAt(false, currentRow, 0);
 							tdq.markDone(currentRow + 1);
 							// marked Not Done by clicking check box
-							JOptionPane.showMessageDialog(null, "Task Marked Incomplete", "Done Window",
-									JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog
+							(null, "Task Marked Incomplete", "Done Window", JOptionPane.INFORMATION_MESSAGE);
 						} else {
 							dtm.setValueAt(true, currentRow, 0);
 							tdq.markDone(currentRow + 1);
 							// marked Done by clicking check box
-							JOptionPane.showMessageDialog(null, "Task Marked Done", "Done Window",
-									JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog
+							(null, "Task Marked Done", "Done Window", JOptionPane.INFORMATION_MESSAGE);
 						}
 					}
 				}
@@ -146,7 +145,7 @@ public class GTable extends JFrame {
 		btnAdd.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				addTaskGui();
+				addTaskGui(); // Implemented below
 			}
 		});
 		btnAdd.setBounds(10, 11, 100, 40);
@@ -160,9 +159,10 @@ public class GTable extends JFrame {
 			public void mouseClicked(MouseEvent arg0) {
 
 				if (table.getSelectedRow() != -1) {
-					editTaskGui();
+					editTaskGui(); // Implemented below
 				} else
-					JOptionPane.showMessageDialog(null, "No Task Selected", "Edit Window", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog
+					(null, "No Task Selected", "Edit Window", JOptionPane.WARNING_MESSAGE);
 			}
 		});
 		btnEdit.setBounds(120, 11, 100, 40);
@@ -186,7 +186,8 @@ public class GTable extends JFrame {
 						tdq.markDone(currentRow + 1);
 					}
 				} else
-					JOptionPane.showMessageDialog(null, "No Task Selected", "Done Window", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog
+					(null, "No Task Selected", "Done Window", JOptionPane.WARNING_MESSAGE);
 			}
 		});
 		btnMarkDone.setBounds(230, 11, 100, 40);
@@ -244,11 +245,11 @@ public class GTable extends JFrame {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					// add using the ENTER button
+					// Add Task to GUI Table using the ENTER button
 					dtm.addRow(new Object[] { false, textField.getText(), textField_1.getText(), "05-16-2016" });
-					// calling function to save into database from GUI
+					// Call function to save added task into database from GUI
 					tdq.addTask(textField.getText(), textField_1.getText());
-					// added to Database
+					// Task has been added to Database
 					frameAdd.dispose();
 				}
 
@@ -285,8 +286,12 @@ public class GTable extends JFrame {
 		btnSave.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				// add using clicking the Add button
-				dtm.addRow(new Object[] { false, textField.getText(), textField_1.getText(), "05-22-2016" });
+				// Add Task by clicking the Add button
+				
+				// Save today's date
+				java.sql.Date Today = new java.sql.Date(new java.util.Date().getTime());
+				// Add task to the GUI Table
+				dtm.addRow(new Object[] { false, textField.getText(), textField_1.getText(), Today});
 				// call function to save into database from GUI
 				tdq.addTask(textField.getText(), textField_1.getText());
 				// data added to Database
@@ -323,6 +328,7 @@ public class GTable extends JFrame {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					// If Enter key is pressed
 					// Edit Task in GUI
 					dtm.setValueAt(textField.getText(), currentRow, 1);
 					// Edit Task in Database from GUI
@@ -353,8 +359,10 @@ public class GTable extends JFrame {
 		});
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// If click is used
+				// Edit Task in GUI
 				dtm.setValueAt(textField.getText(), currentRow, 1);
-				// calling function to edit into database
+				// Edit Task in Database from GUI
 				tdq.editTask(currentRow + 1, textField.getText());
 				frameEdit.dispose();
 			}
@@ -371,7 +379,6 @@ public class GTable extends JFrame {
 
 			Object[] toAdd = { isDone, task, category, date };
 
-			// System.out.println("data added");
 			dtm.addRow(toAdd);
 		}
 	}
