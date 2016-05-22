@@ -1,8 +1,9 @@
 Contributions:
 
-Akbar Mirza - ToDo Class, ToDo Queries, Prepared Statements for ToDo List, Console Interface & Input Handling, Console Display, Comments on Main & ToDo Queries, Connecting ToDoList to GUI
+Akbar Mirza - ToDo Class, ToDoQueries (used as SQL Template), Prepared Statements for ToDo List, Console Interface & Input Handling, Console Display, Comments on Main, ToDo & ToDoQueries, Connecting ToDoList ArrayList to GUI
 Aziz - ToDo, ToDo Queries (Implementing Categories), SQL Commands, AddTasks ToDo List
 Asif -
-Ichwan -
+Ichwan - Commented the Main.java class 
 Muhammad Rehman - GUI Code for GTable
-Md -
+Md - GUI Code for Add & Edit Windows
+Jonathan Rozario - Edit Task Button, Add Task Button, Done Button, checkbox in GUI connected with Database. Function comments in GTable.java for buttons linked with database. Worked on editTask and addTask dialog windows sizing issues. 
