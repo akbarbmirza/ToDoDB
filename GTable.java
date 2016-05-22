@@ -28,26 +28,13 @@ public class GTable extends JFrame {
 	// *******************************************************************************
 	private JTextField textField;
 	private JTextField textField_1;
-	JTextArea textEditTask; // for Edit Task method
-	JTextField textEditCatagory; // for Edit Task method
+	JTextArea textEditTask; // needed for "Edit Task" method
 
 	// DataBase Connection Class
 	private ToDoQueries tdq;
 
 	String[] columnNames = { "[  ]", "Task", "Category", "Date", "ID", "USER" };
-	Object[][] data = {
-			// {true, "Homework Assignment", "School", "06-05-2016"},
-			// {true, "Doctor's Appointment", "Doctor","06-05-2016"},
-			// {false, "Meeting", "Work","06-10-2016"},
-			// {false, "Meeting", "Work","06-06-2016"},
-			// {true, "Meeting", "Work","06-15-2016"},
-			// {true, "Meeting", "Work","06-21-2016"},
-			// {false, "Doctor's Appointment", "Doctor","07-05-2016"},
-			// {false, "Doctor's Appointment", "Doctor","08-05-2016"},
-			// {true, "Homework Assignment", "School","09-15-2016"},
-			// {false, "Homework Assignment", "School","10-13-2016"},
-			// {true, "Homework Assignment", "School","06-05-2016"},
-	};
+	Object[][] data = {};
 
 	final DefaultTableModel dtm = new DefaultTableModel(data, columnNames) {
 		public Class<?> getColumnClass(int column) {
@@ -69,7 +56,8 @@ public class GTable extends JFrame {
 
 	};
 	final JTable table = new JTable(dtm) {
-		// Got this code from Stackoverflow to make the GTable data non-editable
+		// Got this code from Stack Overflow to make the GTable data
+		// non-editable
 		private static final long serialVersionUID = 1L;
 
 		// This function makes only the first column editable
@@ -77,7 +65,6 @@ public class GTable extends JFrame {
 		public boolean isCellEditable(int row, int column) {
 
 			return false;
-
 		};
 	};
 
@@ -93,13 +80,6 @@ public class GTable extends JFrame {
 					String username = login.getUsername();
 					frame.setTitle(username + "'s ToDo List");
 
-					// Object[][] newData = {
-					// {true, "hello","hi","wow"},
-					// {false, "hello","hi","wow3"},
-					// {true, "test","coolf","wow2"},
-					// {true, "nice","hiii","cool"},
-					// {false, "good","hii","wow"},
-					// };
 					ArrayList<ToDo> newData = tdq.getTodoList();
 					frame.addData(newData);
 				} catch (Exception e) {
@@ -110,7 +90,7 @@ public class GTable extends JFrame {
 	}
 
 	public GTable(final ToDoQueries tdq) {
-		// set the todo queries
+		// set the ToDo queries
 		this.tdq = tdq;
 
 		// Make Sure it Exits on close
@@ -146,13 +126,13 @@ public class GTable extends JFrame {
 						if (dtm.getValueAt(currentRow, 0).equals(true)) {
 							dtm.setValueAt(false, currentRow, 0);
 							tdq.markDone(currentRow + 1);
-							// marked Not Done by clicking checkbox
+							// marked Not Done by clicking check box
 							JOptionPane.showMessageDialog(null, "Task Marked Incomplete", "Done Window",
 									JOptionPane.INFORMATION_MESSAGE);
 						} else {
 							dtm.setValueAt(true, currentRow, 0);
 							tdq.markDone(currentRow + 1);
-							// marked Done by clicking checkbox
+							// marked Done by clicking check box
 							JOptionPane.showMessageDialog(null, "Task Marked Done", "Done Window",
 									JOptionPane.INFORMATION_MESSAGE);
 						}
@@ -239,7 +219,7 @@ public class GTable extends JFrame {
 		frameAdd.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frameAdd.setVisible(true);
 
-		// =====================Creating all necessary object===============
+		// ==================== Creating all necessary objects ==============
 		setLayout(null);
 
 		contentPane = new JPanel();
@@ -247,7 +227,7 @@ public class GTable extends JFrame {
 		frameAdd.add(contentPane);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(31, 48, 394, 25);
+		scrollPane.setBounds(31, 48, 394, 35);
 		contentPane.add(scrollPane);
 
 		textField = new JTextField();
@@ -255,7 +235,7 @@ public class GTable extends JFrame {
 		textField.setColumns(10);
 
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(31, 127, 394, 25);
+		scrollPane_1.setBounds(31, 127, 394, 35);
 		contentPane.add(scrollPane_1);
 
 		textField_1 = new JTextField();
@@ -263,11 +243,11 @@ public class GTable extends JFrame {
 		textField_1.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ENTER) { // add using the
-															// ENTER button
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					// add using the ENTER button
 					dtm.addRow(new Object[] { false, textField.getText(), textField_1.getText(), "05-16-2016" });
 					// calling function to save into database from GUI
-					tdq.addTask(textField.getText(), textField_1.getText()); 
+					tdq.addTask(textField.getText(), textField_1.getText());
 					// added to Database
 					frameAdd.dispose();
 				}
@@ -304,9 +284,9 @@ public class GTable extends JFrame {
 		// Save button's action
 		btnSave.addActionListener(new ActionListener() {
 
-			public void actionPerformed(ActionEvent e) { 
+			public void actionPerformed(ActionEvent e) {
 				// add using clicking the Add button
-				dtm.addRow(new Object[] { false, textField.getText(), textField_1.getText(), "05-16-2016" });
+				dtm.addRow(new Object[] { false, textField.getText(), textField_1.getText(), "05-22-2016" });
 				// call function to save into database from GUI
 				tdq.addTask(textField.getText(), textField_1.getText());
 				// data added to Database
@@ -318,14 +298,13 @@ public class GTable extends JFrame {
 
 	public void editTaskGui() {
 		final int currentRow = table.convertRowIndexToModel(table.getSelectedRow());
-		final JFrame frameEdit = new JFrame("Edit Task" + currentRow);
-		frameEdit.setSize(500, 300);
+		final JFrame frameEdit = new JFrame("Edit Task");
+		frameEdit.setSize(480, 150);
 		frameEdit.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frameEdit.setVisible(true);
 		String Task = (String) table.getValueAt(currentRow, 1);
-		String Category = (String) table.getValueAt(currentRow, 2);
 
-		// ====================Creating all necessary object===============
+		// =================== Creating all necessary objects ==============
 		setLayout(null);
 
 		contentPane = new JPanel();
@@ -333,25 +312,19 @@ public class GTable extends JFrame {
 		frameEdit.add(contentPane);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(31, 48, 394, 25);
+		scrollPane.setBounds(31, 48, 394, 35);
 		contentPane.add(scrollPane);
 
 		textField = new JTextField(Task);
 		scrollPane.setViewportView(textField);
 		textField.setColumns(10);
 
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(31, 127, 394, 25);
-		contentPane.add(scrollPane_1);
-
-		textField_1 = new JTextField(Category);
-		scrollPane_1.setViewportView(textField_1);
-		textField_1.addKeyListener(new KeyAdapter() {
+		textField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					// Edit Task in GUI
 					dtm.setValueAt(textField.getText(), currentRow, 1);
-					dtm.setValueAt(textField_1.getText(), currentRow, 2);
 					// Edit Task in Database from GUI
 					tdq.editTask(currentRow + 1, textField.getText());
 					frameEdit.dispose();
@@ -359,24 +332,18 @@ public class GTable extends JFrame {
 
 			}
 		});
-		textField_1.setColumns(10);
 
 		JLabel lblAddTask = new JLabel("Edit Task");
 		lblAddTask.setBounds(31, 11, 88, 26);
 		lblAddTask.setFont(new Font("Arial", Font.PLAIN, 16));
 		contentPane.add(lblAddTask);
 
-		JLabel lblAddCategory = new JLabel("Edit Category");
-		lblAddCategory.setBounds(31, 84, 138, 32);
-		lblAddCategory.setFont(new Font("Arial", Font.PLAIN, 16));
-		contentPane.add(lblAddCategory);
-
 		JButton btnCancel = new JButton("Cancel");
-		btnCancel.setBounds(80, 180, 107, 35);
+		btnCancel.setBounds(80, 90, 107, 35);
 		contentPane.add(btnCancel);
 
 		JButton btnSave = new JButton("Save");
-		btnSave.setBounds(260, 180, 107, 35);
+		btnSave.setBounds(260, 90, 107, 35);
 		contentPane.add(btnSave);
 
 		btnCancel.addActionListener(new ActionListener() {
@@ -387,7 +354,6 @@ public class GTable extends JFrame {
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dtm.setValueAt(textField.getText(), currentRow, 1);
-				dtm.setValueAt(textField_1.getText(), currentRow, 2);
 				// calling function to edit into database
 				tdq.editTask(currentRow + 1, textField.getText());
 				frameEdit.dispose();

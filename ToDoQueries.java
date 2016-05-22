@@ -44,7 +44,6 @@ public class ToDoQueries {
 	private PreparedStatement selectAllTasksFromCategoriesTable;
 	private PreparedStatement selectTaskByIDFromCategoriesTable;
 	private PreparedStatement insertNewTaskToCategoriesTable;
-	private PreparedStatement getDeleteTaskByIDFromCategoriesTable;
 	private PreparedStatement deleteTaskByIDFromCategoriesTable;
 
 	// See all columns together
@@ -63,7 +62,7 @@ public class ToDoQueries {
 			String sql;
 			ResultSet rs;
 
-			// DROP TODO TABLE
+			// DROP ToDo TABLE
 			sql = "DROP TABLE TODO;";
 			try {
 				s = connection.createStatement();
@@ -81,8 +80,7 @@ public class ToDoQueries {
 				e.printStackTrace();
 			}
 
-			// ************************* TODO GTable
-			// ********************************
+			// ****************** ToDo GTable ****************************
 
 			// CREATE TODO TABLE
 			sql = "CREATE TABLE TODO(ID INT, Task VARCHAR(255), Done BOOLEAN NOT NULL, Date DATE );";
@@ -113,22 +111,12 @@ public class ToDoQueries {
 			// create query that marks task as done in the database
 			sql = "UPDATE TODO SET Done = NOT Done WHERE ID = ?;";
 			markTaskDoneByIDFromTodoTable = connection.prepareStatement(sql);
-			
-			// create query that marks task as done in the database
-//			sql = "UPDATE TODO SET Done = FALSE WHERE ID = ?;";
-//			markTaskNotDoneByIDFromTodoTable = connection.prepareStatement(sql);
 
 			// create query that deletes task from todo GTable
 			sql = "DELETE FROM TODO WHERE ID = ?;";
 			deleteTaskByIDFromTodoTable = connection.prepareStatement(sql);
 
-			// // create query that deletes task from categories GTable
-			// sql = "DELETE FROM CATEGORIES WHERE ID = ?;";
-			// deleteTaskByIDFromCategoriesTable =
-			// connection.prepareStatement(sql);
-
-			// ******************* CATEGORIES TABLE
-			// **************************************
+			// ************** CATEGORIES TABLE *************************************
 
 			// CREATE SECOND TABLE
 			sql = "CREATE TABLE CATEGORIES (ID INT, Category VARCHAR(255));";
@@ -331,12 +319,12 @@ public class ToDoQueries {
 
 	public int editTask(int ID, String newDesc) {
 		if (ID > getTodoList().size() || ID < 1) {
-      System.out.println("Sorry, that task doesn't exist");
-      return -1; // error
-    }
-    try {
-      // Update task on our TD object
-      getTodoList().get(ID - 1).editTask(newDesc);
+			System.out.println("Sorry, that task doesn't exist");
+			return -1; // error
+		}
+		try {
+			// Update task on our TD object
+			getTodoList().get(ID - 1).editTask(newDesc);
 
 			// Initialize our Prepared Statement
 			updateTaskByIDFromTodoTable.setString(1, newDesc);
@@ -349,19 +337,19 @@ public class ToDoQueries {
 			// updateTodo(toEdit);
 		} catch (SQLException e) {
 			e.printStackTrace();
-      return -1; // error
+			return -1; // error
 		}
 
-    return 0; // success
+		return 0; // success
 	};
 
 	// Mark Done as True in TODO GTable
-  // marks done if done
-  // marks not done if not done
+	// marks done if done
+	// marks not done if not done
 	public int markDone(int ID) {
 		if (ID > getTodoList().size() || ID < 1) {
 			System.out.println("Sorry, that task doesn't exist");
-      return -1; // error
+			return -1; // error
 		}
 		try {
 			markTaskDoneByIDFromTodoTable.setInt(1, ID);
@@ -372,28 +360,28 @@ public class ToDoQueries {
 			getTodoList().get(ID - 1).markDone();
 		} catch (SQLException e) {
 			e.printStackTrace();
-      return -1; // error
+			return -1; // error
 		}
-    return 0; // success
+		return 0; // success
 	}
 	// Mark Not Done in TODO GTable
 
-//	public void markNotDone(int ID) {
-//		if (ID > getTodoList().size() || ID < 1) {
-//			System.out.println("Sorry, that task doesn't exist");
-//		}
-//		try {
-//			markTaskNotDoneByIDFromTodoTable.setInt(1, ID);
-//			// Execute the statement
-//			markTaskNotDoneByIDFromTodoTable.executeUpdate();
-//
-//			// update task on list
-//			getTodoList().get(ID - 1).markNotDone();
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//
-//	}
+	// public void markNotDone(int ID) {
+	// if (ID > getTodoList().size() || ID < 1) {
+	// System.out.println("Sorry, that task doesn't exist");
+	// }
+	// try {
+	// markTaskNotDoneByIDFromTodoTable.setInt(1, ID);
+	// // Execute the statement
+	// markTaskNotDoneByIDFromTodoTable.executeUpdate();
+	//
+	// // update task on list
+	// getTodoList().get(ID - 1).markNotDone();
+	// } catch (SQLException e) {
+	// e.printStackTrace();
+	// }
+	//
+	// }
 	// Delete task from BothTables
 
 	public void deleteTaskfromBothTables(int ID) {
